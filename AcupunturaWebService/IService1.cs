@@ -12,36 +12,61 @@ namespace AcupunturaWebService
     [ServiceContract]
     public interface IService1
     {
+        /*
+       * AUTHENTICATION
+       * */
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+        ResponseFormat = WebMessageFormat.Json,
+        UriTemplate = "login?username={username}&password={password}")]
+        string logIn(string username, string password);
+
 
         [OperationContract]
-        string GetData(int value);
+        [WebInvoke(Method = "POST",
+        ResponseFormat = WebMessageFormat.Json,
+        UriTemplate = "logout")]
+        void logOut(string token);
+
 
         [OperationContract]
-        CompositeType GetDataUsingDataContract(CompositeType composite);
+        [WebInvoke(Method = "GET",
+        ResponseFormat = WebMessageFormat.Json,
+        UriTemplate = "isAdmin?token={token}")]
+        bool isAdmin(string token);
 
-        // TODO: Add your service operations here
+        [OperationContract]
+        [WebInvoke(Method = "GET",
+        ResponseFormat = WebMessageFormat.Json,
+        UriTemplate = "isLoggedIn?token={token}")]
+        bool isLoggedIn(string token);
+
+        [OperationContract]
+        [WebInvoke(Method = "GET",
+        ResponseFormat = WebMessageFormat.Json,
+        UriTemplate = "getAllUtilizadores?token={token}")]
+        List<UtilizadorWEB> getAllUtilizadores(string token);
+
+
+        /*
+         *  END AUTHENTICATION
+         * 
+         */
+
+      
     }
 
-
-    // Use a data contract as illustrated in the sample below to add composite types to service operations.
     [DataContract]
-    public class CompositeType
+    public class UtilizadorWEB
     {
-        bool boolValue = true;
-        string stringValue = "Hello ";
-
         [DataMember]
-        public bool BoolValue
-        {
-            get { return boolValue; }
-            set { boolValue = value; }
-        }
-
+        public int id { get; set; }
         [DataMember]
-        public string StringValue
-        {
-            get { return stringValue; }
-            set { stringValue = value; }
-        }
+        public string username { get; set; }
+        [DataMember]
+        public string password { get; set; }
+        [DataMember]
+        public Boolean isAdmin { get; set; }
+
     }
 }

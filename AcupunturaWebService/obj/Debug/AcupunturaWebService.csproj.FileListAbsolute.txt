@@ -1,0 +1,7 @@
+E:\Diogo\Faculdade\I.S\AcupunturaWebService\AcupunturaWebService\obj\Debug\AcupunturaWebService.csprojResolveAssemblyReference.cache
+E:\Diogo\Faculdade\I.S\AcupunturaWebService\AcupunturaWebService\bin\AcupunturaWebService.dll
+E:\Diogo\Faculdade\I.S\AcupunturaWebService\AcupunturaWebService\bin\AcupunturaWebService.pdb
+E:\Diogo\Faculdade\I.S\AcupunturaWebService\AcupunturaWebService\bin\EntityFramework.dll
+E:\Diogo\Faculdade\I.S\AcupunturaWebService\AcupunturaWebService\bin\EntityFramework.xml
+E:\Diogo\Faculdade\I.S\AcupunturaWebService\AcupunturaWebService\obj\Debug\AcupunturaWebService.dll
+E:\Diogo\Faculdade\I.S\AcupunturaWebService\AcupunturaWebService\obj\Debug\AcupunturaWebService.pdb

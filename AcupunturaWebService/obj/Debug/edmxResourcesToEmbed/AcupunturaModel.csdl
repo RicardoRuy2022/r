@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="AcupunturaModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="AcupunturaModelContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="UtilizadorSet" EntityType="AcupunturaModel.Utilizador" />
+    <EntitySet Name="TerapeutaSet" EntityType="AcupunturaModel.Terapeuta" />
+    <EntitySet Name="PacienteSet" EntityType="AcupunturaModel.Paciente" />
+    <EntitySet Name="SintomaSet" EntityType="AcupunturaModel.Sintoma" />
+    <EntitySet Name="ConsultaSet" EntityType="AcupunturaModel.Consulta" />
+    <AssociationSet Name="UtilizadorTerapeuta" Association="AcupunturaModel.UtilizadorTerapeuta">
+      <End Role="Utilizador" EntitySet="UtilizadorSet" />
+      <End Role="Terapeuta" EntitySet="TerapeutaSet" />
+    </AssociationSet>
+    <AssociationSet Name="TerapeutaPaciente" Association="AcupunturaModel.TerapeutaPaciente">
+      <End Role="Terapeuta" EntitySet="TerapeutaSet" />
+      <End Role="Paciente" EntitySet="PacienteSet" />
+    </AssociationSet>
+    <AssociationSet Name="PacienteConsulta" Association="AcupunturaModel.PacienteConsulta">
+      <End Role="Paciente" EntitySet="PacienteSet" />
+      <End Role="Consulta" EntitySet="ConsultaSet" />
+    </AssociationSet>
+    <AssociationSet Name="SintomaConsulta" Association="AcupunturaModel.SintomaConsulta">
+      <End Role="Sintoma" EntitySet="SintomaSet" />
+      <End Role="Consulta" EntitySet="ConsultaSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Utilizador">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="username" Nullable="false" />
+    <Property Type="String" Name="password" Nullable="false" />
+    <Property Type="Boolean" Name="isAdmin" Nullable="false" />
+    <NavigationProperty Name="Terapeuta" Relationship="AcupunturaModel.UtilizadorTerapeuta" FromRole="Utilizador" ToRole="Terapeuta" />
+  </EntityType>
+  <EntityType Name="Terapeuta">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="nome" Nullable="false" />
+    <Property Type="Int32" Name="bi" Nullable="false" />
+    <Property Type="DateTime" Name="data_nascimento" Nullable="false" />
+    <NavigationProperty Name="Utilizador" Relationship="AcupunturaModel.UtilizadorTerapeuta" FromRole="Terapeuta" ToRole="Utilizador" />
+    <NavigationProperty Name="Paciente" Relationship="AcupunturaModel.TerapeutaPaciente" FromRole="Terapeuta" ToRole="Paciente" />
+  </EntityType>
+  <EntityType Name="Paciente">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="nome" Nullable="false" />
+    <Property Type="Int32" Name="bi" Nullable="false" />
+    <Property Type="DateTime" Name="data_nascimento" Nullable="false" />
+    <NavigationProperty Name="Terapeuta" Relationship="AcupunturaModel.TerapeutaPaciente" FromRole="Paciente" ToRole="Terapeuta" />
+    <NavigationProperty Name="Consulta" Relationship="AcupunturaModel.PacienteConsulta" FromRole="Paciente" ToRole="Consulta" />
+  </EntityType>
+  <EntityType Name="Sintoma">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="nome" Nullable="false" />
+    <NavigationProperty Name="Consulta" Relationship="AcupunturaModel.SintomaConsulta" FromRole="Sintoma" ToRole="Consulta" />
+  </EntityType>
+  <EntityType Name="Consulta">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="data_consulta" Nullable="false" />
+    <Property Type="String" Name="diagnostico" Nullable="false" />
+    <NavigationProperty Name="Paciente" Relationship="AcupunturaModel.PacienteConsulta" FromRole="Consulta" ToRole="Paciente" />
+    <NavigationProperty Name="Sintoma" Relationship="AcupunturaModel.SintomaConsulta" FromRole="Consulta" ToRole="Sintoma" />
+  </EntityType>
+  <Association Name="UtilizadorTerapeuta">
+    <End Type="AcupunturaModel.Utilizador" Role="Utilizador" Multiplicity="1" />
+    <End Type="AcupunturaModel.Terapeuta" Role="Terapeuta" Multiplicity="0..1" />
+  </Association>
+  <Association Name="TerapeutaPaciente">
+    <End Type="AcupunturaModel.Terapeuta" Role="Terapeuta" Multiplicity="1" />
+    <End Type="AcupunturaModel.Paciente" Role="Paciente" Multiplicity="*" />
+  </Association>
+  <Association Name="PacienteConsulta">
+    <End Type="AcupunturaModel.Paciente" Role="Paciente" Multiplicity="1" />
+    <End Type="AcupunturaModel.Consulta" Role="Consulta" Multiplicity="*" />
+  </Association>
+  <Association Name="SintomaConsulta">
+    <End Type="AcupunturaModel.Sintoma" Role="Sintoma" Multiplicity="*" />
+    <End Type="AcupunturaModel.Consulta" Role="Consulta" Multiplicity="*" />
+  </Association>
+</Schema>

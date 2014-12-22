@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AcupunturaModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="AcupunturaModelStoreContainer">
+    <EntitySet Name="UtilizadorSet" EntityType="AcupunturaModel.Store.UtilizadorSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TerapeutaSet" EntityType="AcupunturaModel.Store.TerapeutaSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PacienteSet" EntityType="AcupunturaModel.Store.PacienteSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SintomaSet" EntityType="AcupunturaModel.Store.SintomaSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ConsultaSet" EntityType="AcupunturaModel.Store.ConsultaSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SintomaConsulta" EntityType="AcupunturaModel.Store.SintomaConsulta" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="UtilizadorTerapeuta" Association="AcupunturaModel.Store.UtilizadorTerapeuta">
+      <End Role="Utilizador" EntitySet="UtilizadorSet" />
+      <End Role="Terapeuta" EntitySet="TerapeutaSet" />
+    </AssociationSet>
+    <AssociationSet Name="TerapeutaPaciente" Association="AcupunturaModel.Store.TerapeutaPaciente">
+      <End Role="Terapeuta" EntitySet="TerapeutaSet" />
+      <End Role="Paciente" EntitySet="PacienteSet" />
+    </AssociationSet>
+    <AssociationSet Name="PacienteConsulta" Association="AcupunturaModel.Store.PacienteConsulta">
+      <End Role="Paciente" EntitySet="PacienteSet" />
+      <End Role="Consulta" EntitySet="ConsultaSet" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SintomaConsulta_Sintoma" Association="AcupunturaModel.Store.FK_SintomaConsulta_Sintoma">
+      <End Role="Sintoma" EntitySet="SintomaSet" />
+      <End Role="SintomaConsulta" EntitySet="SintomaConsulta" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SintomaConsulta_Consulta" Association="AcupunturaModel.Store.FK_SintomaConsulta_Consulta">
+      <End Role="Consulta" EntitySet="ConsultaSet" />
+      <End Role="SintomaConsulta" EntitySet="SintomaConsulta" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="UtilizadorSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="username" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="password" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="isAdmin" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TerapeutaSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nome" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="bi" Type="int" Nullable="false" />
+    <Property Name="data_nascimento" Type="datetime" Nullable="false" />
+    <Property Name="Utilizador_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PacienteSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nome" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="bi" Type="int" Nullable="false" />
+    <Property Name="data_nascimento" Type="datetime" Nullable="false" />
+    <Property Name="Terapeuta_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SintomaSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nome" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ConsultaSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="data_consulta" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="diagnostico" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Paciente_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SintomaConsulta">
+    <Key>
+      <PropertyRef Name="Sintoma_Id" />
+      <PropertyRef Name="Consulta_Id" />
+    </Key>
+    <Property Name="Sintoma_Id" Type="int" Nullable="false" />
+    <Property Name="Consulta_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="UtilizadorTerapeuta">
+    <End Role="Utilizador" Type="AcupunturaModel.Store.UtilizadorSet" Multiplicity="1" />
+    <End Role="Terapeuta" Type="AcupunturaModel.Store.TerapeutaSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Utilizador">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Terapeuta">
+        <PropertyRef Name="Utilizador_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TerapeutaPaciente">
+    <End Role="Terapeuta" Type="AcupunturaModel.Store.TerapeutaSet" Multiplicity="1" />
+    <End Role="Paciente" Type="AcupunturaModel.Store.PacienteSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Terapeuta">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Paciente">
+        <PropertyRef Name="Terapeuta_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PacienteConsulta">
+    <End Role="Paciente" Type="AcupunturaModel.Store.PacienteSet" Multiplicity="1" />
+    <End Role="Consulta" Type="AcupunturaModel.Store.ConsultaSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Paciente">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Consulta">
+        <PropertyRef Name="Paciente_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SintomaConsulta_Sintoma">
+    <End Role="Sintoma" Type="AcupunturaModel.Store.SintomaSet" Multiplicity="1" />
+    <End Role="SintomaConsulta" Type="AcupunturaModel.Store.SintomaConsulta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sintoma">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SintomaConsulta">
+        <PropertyRef Name="Sintoma_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SintomaConsulta_Consulta">
+    <End Role="SintomaConsulta" Type="AcupunturaModel.Store.SintomaConsulta" Multiplicity="*" />
+    <End Role="Consulta" Type="AcupunturaModel.Store.ConsultaSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Consulta">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SintomaConsulta">
+        <PropertyRef Name="Consulta_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
