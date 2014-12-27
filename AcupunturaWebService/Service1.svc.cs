@@ -65,7 +65,7 @@ namespace AcupunturaWebService
             }
             else
             {
-                throw new ArgumentException("Erro\nUtilizador ou Password inválidos.");
+                throw new ArgumentException("Invalid username or password.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace AcupunturaWebService
             Token tokenObject;
             if (String.IsNullOrEmpty(token))
             {
-                throw new ArgumentException("Erro\n Token inválido!");
+                throw new ArgumentException("Invalid token.");
             }
             try
             {
@@ -148,16 +148,16 @@ namespace AcupunturaWebService
             }
             catch (KeyNotFoundException)
             {
-                throw new ArgumentException("Erro\nUtilizador não logado ou a sessão expirou.");
+                throw new ArgumentException("User not logged in or session expired.");
             }
             if (tokenObject.isTimeOutExpired())
             {
                 tokens.Remove(tokenObject.Username);
-                throw new Exception("Erro\nA sessão expirou.");
+                throw new Exception("Session expired.");
             }
             if (mustBeAdmin && !tokens[token].Utilizador.isAdmin)
             {
-                throw new ArgumentException("Erro\nApenas administradores podem efetuar esta operação.");
+                throw new ArgumentException("Only administrators can manage that operation.");
             }
             return tokenObject;
 
