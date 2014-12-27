@@ -185,7 +185,6 @@ namespace AcupunturaWebService
             return listaFinal;
         }
 
-
-        //fim authentication
+        //fim autenticacao
     }
 }
