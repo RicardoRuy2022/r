@@ -14,13 +14,13 @@ namespace AcupunturaWebService
     public class Service1 : IService1
     {
         DBHandler dbHandler = new DBHandler();
-        private Dictionary<string, UtilizadorWEB> contas;
+        private Dictionary<string, UtilizadorWEB> utilizadores;
         private Dictionary<string, Token> tokens;
 
         public Service1()
         {
 
-            this.contas = new Dictionary<string, UtilizadorWEB>();
+            this.utilizadores = new Dictionary<string, UtilizadorWEB>();
             this.tokens = new Dictionary<string, Token>();
         }
         private class Token
@@ -28,75 +28,72 @@ namespace AcupunturaWebService
             private string value;
             private DateTime dataLogin;
             private DateTime dataExpirar;
-            private int HORAS;
-            private UtilizadorWEB conta;
+            private int tempoSessao;
+            private UtilizadorWEB utilizador;
 
-            public Token(UtilizadorWEB conta) : this(conta, DateTime.Now) { }
+            public Token(UtilizadorWEB utilizador) : this(utilizador, DateTime.Now) { }
 
-            public Token(UtilizadorWEB conta, DateTime dataLogin)
+            public Token(UtilizadorWEB utilizador, DateTime dataLogin)
             {
-                HORAS = 10;
+                tempoSessao = 4;
                 this.value = Guid.NewGuid().ToString();
                 this.dataLogin = dataLogin;
-                this.dataExpirar = dataLogin.AddHours(HORAS);
-                this.conta = conta;
+                this.dataExpirar = dataLogin.AddHours(tempoSessao);
+                this.utilizador = utilizador;
             }
 
             public string Value { get { return value; } }
             public DateTime DataExpirar { get { return dataExpirar; } }
-            public UtilizadorWEB Conta { get { return conta; } }
-            public string Username { get { return conta.username; } }
-            //  public void UpdateTimeout() { UpdateTimeout(240000); }
-            // public void UpdateTimeout(long timeout) { this.timeout = Environment.TickCount + timeout; }
+            public UtilizadorWEB Utilizador { get { return utilizador; } }
+            public string Username { get { return utilizador.username; } }
             public Boolean isTimeOutExpired() { return dataExpirar < DateTime.Now; }
 
         }
 
-        //authentication
+        //autenticacao:
 
         public string logIn(String username, String password)
         {
             cleanUpTokens();
-            lercontasBD();
+            lerUtilizadoresBD();
 
-            if (!String.IsNullOrEmpty(username) && !String.IsNullOrEmpty(password) && password.Equals(contas[username].password))
+            if (!String.IsNullOrEmpty(username) && !String.IsNullOrEmpty(password) && password.Equals(utilizadores[username].password))
             {
-                Token tokenObject = new Token(contas[username]);
+                Token tokenObject = new Token(utilizadores[username]);
                 tokens.Add(tokenObject.Value, tokenObject);
                 return tokenObject.Value;
             }
             else
             {
-                throw new ArgumentException("ERROR: invalid username/password combination");
+                throw new ArgumentException("Erro\nUtilizador ou Password inválidos.");
             }
-            // return handler.logIn(username, password);
         }
 
-        private void lercontasBD()
+        private void lerUtilizadoresBD()
         {
-            List<UtilizadorWEB> listaContasWeb = new List<UtilizadorWEB>();
-            List<Utilizador> listaConta = dbHandler.getContas();
+            List<UtilizadorWEB> listaUtilizadoresWeb = new List<UtilizadorWEB>();
+            List<Utilizador> listaUtilizador = dbHandler.getUtilizadores();
 
-            foreach (Utilizador c in listaConta)
+            foreach (Utilizador u in listaUtilizador)
             {
-                UtilizadorWEB con = new UtilizadorWEB();
-                con.username = c.username;
-                con.password = c.password;
-                con.isAdmin = c.isAdmin;
-                con.id = c.Id;
-                if (!verificaConta(con))
-                    contas.Add(con.username, con);
+                UtilizadorWEB util = new UtilizadorWEB();
+                util.username = u.username;
+                util.password = u.password;
+                util.isAdmin = u.isAdmin;
+                util.id = u.Id;
+                if (!verificaUtilizador(util))
+                    utilizadores.Add(util.username, util);
             }
 
 
 
         }
 
-        private bool verificaConta(UtilizadorWEB con)
+        private bool verificaUtilizador(UtilizadorWEB util)
         {
-            foreach (KeyValuePair<String, UtilizadorWEB> c in contas)
+            foreach (KeyValuePair<String, UtilizadorWEB> u in utilizadores)
             {
-                if (c.Value.username.Equals(con.username))
+                if (u.Value.username.Equals(util.username))
                     return true;
             }
             return false;
@@ -111,7 +108,7 @@ namespace AcupunturaWebService
 
         public bool isAdmin(string token)
         {
-            return tokens[token].Conta.isAdmin;
+            return tokens[token].Utilizador.isAdmin;
         }
 
         public bool isLoggedIn(string token)
@@ -143,7 +140,7 @@ namespace AcupunturaWebService
             Token tokenObject;
             if (String.IsNullOrEmpty(token))
             {
-                throw new ArgumentException("Error: invalid token value.");
+                throw new ArgumentException("Erro\n Token inválido!");
             }
             try
             {
@@ -151,16 +148,16 @@ namespace AcupunturaWebService
             }
             catch (KeyNotFoundException)
             {
-                throw new ArgumentException("Error: user is not logged in /expired session?).");
+                throw new ArgumentException("Erro\nUtilizador não logado ou a sessão expirou.");
             }
             if (tokenObject.isTimeOutExpired())
             {
                 tokens.Remove(tokenObject.Username);
-                throw new Exception("Error: the session has expired. Please Loged in again.");
+                throw new Exception("Erro\nA sessão expirou.");
             }
-            if (mustBeAdmin && !tokens[token].Conta.isAdmin)
+            if (mustBeAdmin && !tokens[token].Utilizador.isAdmin)
             {
-                throw new ArgumentException("Error: only admins are allowed to perform this operation.");
+                throw new ArgumentException("Erro\nApenas administradores podem efetuar esta operação.");
             }
             return tokenObject;
 
@@ -173,7 +170,7 @@ namespace AcupunturaWebService
             List<Utilizador> listaUtilizadores = new List<Utilizador>();
             List<UtilizadorWEB> listaFinal = new List<UtilizadorWEB>();
 
-            listaUtilizadores = dbHandler.getContas();
+            listaUtilizadores = dbHandler.getUtilizadores();
 
             foreach( Utilizador u in listaUtilizadores)
             {

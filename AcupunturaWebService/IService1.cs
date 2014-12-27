@@ -12,22 +12,17 @@ namespace AcupunturaWebService
     [ServiceContract]
     public interface IService1
     {
-        /*
-       * AUTHENTICATION
-       * */
         [OperationContract]
         [WebInvoke(Method = "POST",
         ResponseFormat = WebMessageFormat.Json,
         UriTemplate = "login?username={username}&password={password}")]
         string logIn(string username, string password);
 
-
         [OperationContract]
         [WebInvoke(Method = "POST",
         ResponseFormat = WebMessageFormat.Json,
         UriTemplate = "logout")]
         void logOut(string token);
-
 
         [OperationContract]
         [WebInvoke(Method = "GET",
@@ -46,14 +41,6 @@ namespace AcupunturaWebService
         ResponseFormat = WebMessageFormat.Json,
         UriTemplate = "getAllUtilizadores?token={token}")]
         List<UtilizadorWEB> getAllUtilizadores(string token);
-
-
-        /*
-         *  END AUTHENTICATION
-         * 
-         */
-
-      
     }
 
     [DataContract]
@@ -67,6 +54,5 @@ namespace AcupunturaWebService
         public string password { get; set; }
         [DataMember]
         public Boolean isAdmin { get; set; }
-
     }
 }

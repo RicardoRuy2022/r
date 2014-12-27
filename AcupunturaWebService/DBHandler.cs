@@ -10,39 +10,30 @@ namespace AcupunturaWebService
 
         AcupunturaModelContainer modelo = new AcupunturaModelContainer();
 
-        /*
-         * Autenticacao
-         * */
-
-        public String logIn(string username, string password)
+        public Boolean logIn(string username, string password)
         {
-            String texto = "";
-            Utilizador c = new Utilizador();
+            Boolean isLogged = false;
+            Utilizador u = new Utilizador();
             try
             {
-                c = modelo.UtilizadorSet.Where(i => i.username == username).First();
-                if (c.password == password)
-                    texto = "S";
-                else
-                    texto = "N";
+                u = modelo.UtilizadorSet.Where(i => i.username == username).First();
+                if (u.password == password)
+                    isLogged = true;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                texto = "User not available";
-                Console.WriteLine(e.ToString());
+                throw ex;
             }
 
-            return texto;
+            return isLogged;
         }
 
-        /**/
-
-        public List<Utilizador> getContas()
+        public List<Utilizador> getUtilizadores()
         {
-            List<Utilizador> listaContas = new List<Utilizador>();
-            listaContas = modelo.UtilizadorSet.ToList();
+            List<Utilizador> listaUtilizadores = new List<Utilizador>();
+            listaUtilizadores = modelo.UtilizadorSet.ToList();
 
-            return listaContas;
+            return listaUtilizadores;
         }
     }
 }
