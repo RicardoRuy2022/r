@@ -12,6 +12,7 @@ namespace AcupunturaWebService
     [ServiceContract]
     public interface IService1
     {
+        //Autenticacao
         [OperationContract]
         [WebInvoke(Method = "POST",
         ResponseFormat = WebMessageFormat.Json,
@@ -35,12 +36,17 @@ namespace AcupunturaWebService
         ResponseFormat = WebMessageFormat.Json,
         UriTemplate = "isLoggedIn?token={token}")]
         bool isLoggedIn(string token);
-
+        //-----------------------------------------
         [OperationContract]
         [WebInvoke(Method = "GET",
         ResponseFormat = WebMessageFormat.Json,
         UriTemplate = "getAllUtilizadores?token={token}")]
         List<UtilizadorWEB> getAllUtilizadores(string token);
+
+        //XML:
+
+        [OperationContract]
+        void writeToXmlFile(LinkedList<Sintomma> listaSintomas, LinkedList<Diagnostico> listaDiagnosticos);
     }
 
     [DataContract]
@@ -54,5 +60,54 @@ namespace AcupunturaWebService
         public string password { get; set; }
         [DataMember]
         public Boolean isAdmin { get; set; }
+    }
+
+    [DataContract]
+    public class Sintomma
+    {
+        string _nome;
+
+        [DataMember]
+        public string Nome
+        {
+            get { return _nome; }
+            set { _nome = value; }
+        }
+    }
+    [DataContract]
+    public class Diagnostico
+    {
+
+        string orgao;
+        string nome;
+        string descricao;
+        string tratamento;
+        List<Sintoma> listaSintomas;
+
+        [DataMember]
+        public String getOrgao
+        {
+            get { return orgao; }
+        }
+        [DataMember]
+        public String getNome
+        {
+            get { return nome; }
+        }
+        [DataMember]
+        public String getDescricao
+        {
+            get { return descricao; }
+        }
+        [DataMember]
+        public String getTratamento
+        {
+            get { return tratamento; }
+        }
+        [DataMember]
+        public List<Sintoma> getListaSintomas
+        {
+            get { return listaSintomas; }
+        }
     }
 }

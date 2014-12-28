@@ -5,6 +5,8 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
+using AcupunturaXML;
+using DomainModel;
 
 namespace AcupunturaWebService
 {
@@ -19,10 +21,12 @@ namespace AcupunturaWebService
 
         public Service1()
         {
-
             this.utilizadores = new Dictionary<string, UtilizadorWEB>();
             this.tokens = new Dictionary<string, Token>();
         }
+
+        //Token:
+
         private class Token
         {
             private string value;
@@ -50,7 +54,7 @@ namespace AcupunturaWebService
 
         }
 
-        //autenticacao:
+        //Autenticacao:
 
         public string logIn(String username, String password)
         {
@@ -185,6 +189,22 @@ namespace AcupunturaWebService
             return listaFinal;
         }
 
-        //fim autenticacao
+        //Tratamento do XML:
+
+      public void writeToXmlFile(List<Sintomma> listaSintomas, List<Diagnostico> listaDiagnosticos)
+      {
+          List<DomainModel.Sintoma> listaS = new List<DomainModel.Sintoma>();
+
+          foreach (Sintomma s in listaSintomas)
+          {
+              DomainModel.Sintoma sin = new DomainModel.Sintoma(s.Nome);
+              listaS.Add(sin);
+          }
+
+          List<DomainModel.Diagnostico> listaD = new List<DomainModel.Diagnostico>();
+
+          XmlHandler.writeToXmlFile(listaS, listaD);
+      }
+
     }
 }
