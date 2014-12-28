@@ -3,6 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcupunturaWebService", "AcupunturaWebService\AcupunturaWebService.csproj", "{33B0090B-F16F-4505-864D-B7D837BAA072}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcupunturaXML", "AcupunturaXML\AcupunturaXML.csproj", "{AD238CD3-D2BA-4F10-AA92-FC7CB759F884}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainModel", "DomainModel\DomainModel.csproj", "{0D4D39BA-52FC-4E65-9D17-8416D00C660D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +17,14 @@ Global
 		{33B0090B-F16F-4505-864D-B7D837BAA072}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33B0090B-F16F-4505-864D-B7D837BAA072}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33B0090B-F16F-4505-864D-B7D837BAA072}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD238CD3-D2BA-4F10-AA92-FC7CB759F884}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD238CD3-D2BA-4F10-AA92-FC7CB759F884}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD238CD3-D2BA-4F10-AA92-FC7CB759F884}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD238CD3-D2BA-4F10-AA92-FC7CB759F884}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D4D39BA-52FC-4E65-9D17-8416D00C660D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D4D39BA-52FC-4E65-9D17-8416D00C660D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D4D39BA-52FC-4E65-9D17-8416D00C660D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D4D39BA-52FC-4E65-9D17-8416D00C660D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
