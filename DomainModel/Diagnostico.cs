@@ -25,23 +25,28 @@ namespace DomainModel
 
         public String getOrgao
         {
-            get { return orgao; }
+            get;
+            set;
         }
         public String getNome
         {
-            get { return nome; }
+            get;
+            set;
         }
         public String getDescricao
         {
-            get { return descricao; }
+            get;
+            set;
         }
         public String getTratamento
         {
-            get { return tratamento; }
+            get;
+            set;
         }
         public List<Sintoma> getListaSintomas
         {
-            get { return listaSintomas; }
+            get;
+            set;
         }
     }
 }
