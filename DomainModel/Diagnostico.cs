@@ -12,9 +12,9 @@ namespace DomainModel
         string nome;
         string descricao;
         string tratamento;
-        List<Sintomma> listaSintomas;
+        List<Sintoma> listaSintomas;
 
-        public Diagnostico(string orgao, string nome, string descricao, string tratamento, List<Sintomma> listaSintomas)
+        public Diagnostico(string orgao, string nome, string descricao, string tratamento, List<Sintoma> listaSintomas)
         {
             this.orgao = orgao;
             this.nome = nome;
@@ -39,7 +39,7 @@ namespace DomainModel
         {
             get { return tratamento; }
         }
-        public List<Sintomma> getListaSintomas
+        public List<Sintoma> getListaSintomas
         {
             get { return listaSintomas; }
         }

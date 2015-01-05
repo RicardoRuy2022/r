@@ -191,40 +191,31 @@ namespace AcupunturaWebService
 
         //Tratamento do XML:
 
-//Devia estar assim:
-//Mas para dar tem de estar como em baixo.
-
-        public void writeToXml(string token, List<Sintomma> listaSintomas, List<Diagnostico> listaDiagnosticos)
+        public void writeToXml(string token, List<SintomaWEB> listaSintomas, List<DiagnosticoWEB> listaDiagnosticos)
         {
             checkAuthentication(token, false);
-            List<DomainModel.Sintomma> listaS = new List<DomainModel.Sintomma>();
+            List<DomainModel.Sintoma> listaS = new List<DomainModel.Sintoma>();
 
-            foreach (Sintomma s in listaSintomas)
+            foreach (SintomaWEB s in listaSintomas)
             {
-                DomainModel.Sintomma sin = new DomainModel.Sintomma(s.nome);
+                DomainModel.Sintoma sin = new DomainModel.Sintoma(s.nome);
                 listaS.Add(sin);
             }
 
             List<DomainModel.Diagnostico> listaD = new List<DomainModel.Diagnostico>();
 
+            foreach (DiagnosticoWEB d in listaDiagnosticos)
+            {
+                List<DomainModel.Sintoma> listaSint = new List<DomainModel.Sintoma>();
+                foreach (SintomaWEB sweb in d.listaSintomas)
+                {
+                    DomainModel.Sintoma sint = new DomainModel.Sintoma(sweb.nome);
+                    listaSint.Add(sint);
+                }
+                DomainModel.Diagnostico diag = new DomainModel.Diagnostico(d.orgao, d.nome, d.descricao, d.tratamento, listaSint);
+                listaD.Add(diag);
+            }
             XmlHandler.writeToXmlFile(listaS, listaD);
         }
-
-        //public void writeToXml(string token, string listaSintomas, string listaDiagnosticos)
-        //{
-        //    checkAuthentication(token, false);
-        //    List<DomainModel.Sintomma> listaS = new List<DomainModel.Sintomma>();
-        //    String[] list = listaSintomas.Split('\n');
-        //    foreach (String s in list)
-        //    {
-        //        DomainModel.Sintomma sin = new DomainModel.Sintomma(s);
-        //        listaS.Add(sin);
-        //    }
-
-        //    List<DomainModel.Diagnostico> listaD = new List<DomainModel.Diagnostico>();
-
-        //    XmlHandler.writeToXmlFile(listaS, listaD);
-        //}
-
     }
 }

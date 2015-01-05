@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace DomainModel
 {
-    public class Sintomma
+    public class Sintoma
     {
         string nome;
 
-        public Sintomma(string nome)
+        public Sintoma(string nome)
         {
             this.nome = nome;
         }

@@ -50,7 +50,7 @@ namespace AcupunturaWebService
         BodyStyle=WebMessageBodyStyle.Wrapped,
         ResponseFormat = WebMessageFormat.Json,
         UriTemplate = "writeToXmlFile?token={token}")]
-        void writeToXml(string token, List<Sintomma> listaSintomas, List<Diagnostico> listaDiagnosticos);
+        void writeToXml(string token, List<SintomaWEB> listaSintomas, List<DiagnosticoWEB> listaDiagnosticos);
     }
     
     [DataContract]
@@ -67,14 +67,14 @@ namespace AcupunturaWebService
     }
 
     [DataContract]
-    public class Sintomma
+    public class SintomaWEB
     {
         [DataMember]
         public string nome { get; set; }
     }
 
     [DataContract]
-    public class Diagnostico
+    public class DiagnosticoWEB
     {
         [DataMember]
         public string orgao { get; set; }
@@ -85,6 +85,6 @@ namespace AcupunturaWebService
         [DataMember]
         public string tratamento { get; set; }
         [DataMember]
-        public List<Sintomma> listaSintomas { get; set; }
+        public List<SintomaWEB> listaSintomas { get; set; }
     }
 }
