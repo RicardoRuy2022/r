@@ -10,7 +10,7 @@ namespace AcupunturaXML
 {
     public class XmlHandler
     {
-        public static void writeToXmlFile(List<Sintoma> listaSintomas, List<Diagnostico> listaDiagnosticos)
+        public static void writeToXmlFile(List<Sintomma> listaSintomas, List<Diagnostico> listaDiagnosticos)
         {
             XmlDocument doc = new XmlDocument();
             XmlDeclaration declaration = doc.CreateXmlDeclaration("1.0", null, null);
@@ -22,7 +22,7 @@ namespace AcupunturaXML
 
             //Adicionar Sintomas:
             XmlElement sintomasFolha1 = doc.CreateElement("Sintomas");
-            foreach (Sintoma s in listaSintomas)
+            foreach (Sintomma s in listaSintomas)
             {
                 XmlElement sintomaFolha1 = doc.CreateElement("Sintoma");
                 sintomaFolha1.InnerText = s.getNome;
@@ -49,7 +49,7 @@ namespace AcupunturaXML
                 diagnostico.AppendChild(tratamento);
                 XmlElement sintomasFolha2 = doc.CreateElement("Sintomas");
                 totalSintomas = 0;
-                foreach (Sintoma s in d.getListaSintomas)
+                foreach (Sintomma s in d.getListaSintomas)
                 {
                     XmlElement sintomaFolha2 = doc.CreateElement("Sintoma");
                     sintomaFolha2.InnerText = s.getNome;

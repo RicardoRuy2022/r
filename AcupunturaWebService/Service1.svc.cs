@@ -168,7 +168,7 @@ namespace AcupunturaWebService
         }
 
 
-      public  List<UtilizadorWEB> getAllUtilizadores(string token) 
+        public List<UtilizadorWEB> getAllUtilizadores(string token)
         {
             checkAuthentication(token, false);
             List<Utilizador> listaUtilizadores = new List<Utilizador>();
@@ -176,7 +176,7 @@ namespace AcupunturaWebService
 
             listaUtilizadores = dbHandler.getUtilizadores();
 
-            foreach( Utilizador u in listaUtilizadores)
+            foreach (Utilizador u in listaUtilizadores)
             {
                 UtilizadorWEB util = new UtilizadorWEB();
                 util.id = u.Id;
@@ -191,20 +191,40 @@ namespace AcupunturaWebService
 
         //Tratamento do XML:
 
-      public void writeToXmlFile(List<Sintomma> listaSintomas, List<Diagnostico> listaDiagnosticos)
-      {
-          List<DomainModel.Sintoma> listaS = new List<DomainModel.Sintoma>();
+//Devia estar assim:
+//Mas para dar tem de estar como em baixo.
 
-          foreach (Sintomma s in listaSintomas)
-          {
-              DomainModel.Sintoma sin = new DomainModel.Sintoma(s.Nome);
-              listaS.Add(sin);
-          }
+        public void writeToXml(string token, List<Sintomma> listaSintomas, List<Diagnostico> listaDiagnosticos)
+        {
+            checkAuthentication(token, false);
+            List<DomainModel.Sintomma> listaS = new List<DomainModel.Sintomma>();
 
-          List<DomainModel.Diagnostico> listaD = new List<DomainModel.Diagnostico>();
+            foreach (Sintomma s in listaSintomas)
+            {
+                DomainModel.Sintomma sin = new DomainModel.Sintomma(s.nome);
+                listaS.Add(sin);
+            }
 
-          XmlHandler.writeToXmlFile(listaS, listaD);
-      }
+            List<DomainModel.Diagnostico> listaD = new List<DomainModel.Diagnostico>();
+
+            XmlHandler.writeToXmlFile(listaS, listaD);
+        }
+
+        //public void writeToXml(string token, string listaSintomas, string listaDiagnosticos)
+        //{
+        //    checkAuthentication(token, false);
+        //    List<DomainModel.Sintomma> listaS = new List<DomainModel.Sintomma>();
+        //    String[] list = listaSintomas.Split('\n');
+        //    foreach (String s in list)
+        //    {
+        //        DomainModel.Sintomma sin = new DomainModel.Sintomma(s);
+        //        listaS.Add(sin);
+        //    }
+
+        //    List<DomainModel.Diagnostico> listaD = new List<DomainModel.Diagnostico>();
+
+        //    XmlHandler.writeToXmlFile(listaS, listaD);
+        //}
 
     }
 }

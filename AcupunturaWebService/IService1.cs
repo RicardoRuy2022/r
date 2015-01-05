@@ -44,11 +44,16 @@ namespace AcupunturaWebService
         List<UtilizadorWEB> getAllUtilizadores(string token);
 
         //XML:
-
+        
         [OperationContract]
-        void writeToXmlFile(LinkedList<Sintomma> listaSintomas, LinkedList<Diagnostico> listaDiagnosticos);
+        [WebInvoke(Method = "POST",
+        ResponseFormat = WebMessageFormat.Json,
+        UriTemplate = "writeToXmlFile?token={token}&listaSintomas={listaSintomas}&listaDiagnosticos={listaDiagnosticos}")]
+        //Devia estar assim:
+        void writeToXml(string token, List<Sintomma> listaSintomas, List<Diagnostico> listaDiagnosticos);
+        //void writeToXml(string token, string listaSintomas, string listaDiagnosticos);
     }
-
+    
     [DataContract]
     public class UtilizadorWEB
     {
@@ -65,49 +70,22 @@ namespace AcupunturaWebService
     [DataContract]
     public class Sintomma
     {
-        string _nome;
-
         [DataMember]
-        public string Nome
-        {
-            get { return _nome; }
-            set { _nome = value; }
-        }
+        public string nome { get; set; }
     }
+
     [DataContract]
     public class Diagnostico
     {
-
-        string orgao;
-        string nome;
-        string descricao;
-        string tratamento;
-        List<Sintoma> listaSintomas;
-
         [DataMember]
-        public String getOrgao
-        {
-            get { return orgao; }
-        }
+        public string orgao { get; set; }
         [DataMember]
-        public String getNome
-        {
-            get { return nome; }
-        }
+        public string nome { get; set; }
         [DataMember]
-        public String getDescricao
-        {
-            get { return descricao; }
-        }
+        public string descricao { get; set; }
         [DataMember]
-        public String getTratamento
-        {
-            get { return tratamento; }
-        }
+        public string tratamento { get; set; }
         [DataMember]
-        public List<Sintoma> getListaSintomas
-        {
-            get { return listaSintomas; }
-        }
+        public List<Sintomma> listaSintomas { get; set; }
     }
 }

@@ -5,3 +5,14 @@ E:\Diogo\Faculdade\I.S\AcupunturaWebService\AcupunturaWebService\bin\EntityFrame
 E:\Diogo\Faculdade\I.S\AcupunturaWebService\AcupunturaWebService\bin\EntityFramework.xml
 E:\Diogo\Faculdade\I.S\AcupunturaWebService\AcupunturaWebService\obj\Debug\AcupunturaWebService.dll
 E:\Diogo\Faculdade\I.S\AcupunturaWebService\AcupunturaWebService\obj\Debug\AcupunturaWebService.pdb
+E:\Diogo\Faculdade\I.S\_Projeto\Etapa 2\Source Control\AcupunturaWebService\AcupunturaWebService\obj\Debug\AcupunturaWebService.csprojResolveAssemblyReference.cache
+E:\Diogo\Faculdade\I.S\_Projeto\Etapa 2\Source Control\AcupunturaWebService\AcupunturaWebService\obj\Debug\AcupunturaWebService.dll
+E:\Diogo\Faculdade\I.S\_Projeto\Etapa 2\Source Control\AcupunturaWebService\AcupunturaWebService\obj\Debug\AcupunturaWebService.pdb
+E:\Diogo\Faculdade\I.S\_Projeto\Etapa 2\Source Control\AcupunturaWebService\AcupunturaWebService\bin\AcupunturaWebService.dll
+E:\Diogo\Faculdade\I.S\_Projeto\Etapa 2\Source Control\AcupunturaWebService\AcupunturaWebService\bin\AcupunturaWebService.pdb
+E:\Diogo\Faculdade\I.S\_Projeto\Etapa 2\Source Control\AcupunturaWebService\AcupunturaWebService\bin\AcupunturaXML.dll
+E:\Diogo\Faculdade\I.S\_Projeto\Etapa 2\Source Control\AcupunturaWebService\AcupunturaWebService\bin\DomainModel.dll
+E:\Diogo\Faculdade\I.S\_Projeto\Etapa 2\Source Control\AcupunturaWebService\AcupunturaWebService\bin\EntityFramework.dll
+E:\Diogo\Faculdade\I.S\_Projeto\Etapa 2\Source Control\AcupunturaWebService\AcupunturaWebService\bin\AcupunturaXML.pdb
+E:\Diogo\Faculdade\I.S\_Projeto\Etapa 2\Source Control\AcupunturaWebService\AcupunturaWebService\bin\DomainModel.pdb
+E:\Diogo\Faculdade\I.S\_Projeto\Etapa 2\Source Control\AcupunturaWebService\AcupunturaWebService\bin\EntityFramework.xml
