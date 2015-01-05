@@ -16,3 +16,15 @@ E:\Diogo\Faculdade\I.S\_Projeto\Etapa 2\Source Control\AcupunturaWebService\Acup
 E:\Diogo\Faculdade\I.S\_Projeto\Etapa 2\Source Control\AcupunturaWebService\AcupunturaWebService\bin\AcupunturaXML.pdb
 E:\Diogo\Faculdade\I.S\_Projeto\Etapa 2\Source Control\AcupunturaWebService\AcupunturaWebService\bin\DomainModel.pdb
 E:\Diogo\Faculdade\I.S\_Projeto\Etapa 2\Source Control\AcupunturaWebService\AcupunturaWebService\bin\EntityFramework.xml
+C:\Users\Ines\Documents\ProjetoIS\AcupunturaWebService\AcupunturaWebService\bin\AcupunturaWebService.dll.config
+C:\Users\Ines\Documents\ProjetoIS\AcupunturaWebService\AcupunturaWebService\bin\AcupunturaWebService.dll
+C:\Users\Ines\Documents\ProjetoIS\AcupunturaWebService\AcupunturaWebService\bin\AcupunturaWebService.pdb
+C:\Users\Ines\Documents\ProjetoIS\AcupunturaWebService\AcupunturaWebService\bin\AcupunturaXML.dll
+C:\Users\Ines\Documents\ProjetoIS\AcupunturaWebService\AcupunturaWebService\bin\DomainModel.dll
+C:\Users\Ines\Documents\ProjetoIS\AcupunturaWebService\AcupunturaWebService\bin\EntityFramework.dll
+C:\Users\Ines\Documents\ProjetoIS\AcupunturaWebService\AcupunturaWebService\bin\AcupunturaXML.pdb
+C:\Users\Ines\Documents\ProjetoIS\AcupunturaWebService\AcupunturaWebService\bin\DomainModel.pdb
+C:\Users\Ines\Documents\ProjetoIS\AcupunturaWebService\AcupunturaWebService\bin\EntityFramework.xml
+C:\Users\Ines\Documents\ProjetoIS\AcupunturaWebService\AcupunturaWebService\obj\Debug\AcupunturaWebService.csprojResolveAssemblyReference.cache
+C:\Users\Ines\Documents\ProjetoIS\AcupunturaWebService\AcupunturaWebService\obj\Debug\AcupunturaWebService.dll
+C:\Users\Ines\Documents\ProjetoIS\AcupunturaWebService\AcupunturaWebService\obj\Debug\AcupunturaWebService.pdb

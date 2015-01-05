@@ -51,8 +51,40 @@ namespace AcupunturaWebService
         ResponseFormat = WebMessageFormat.Json,
         UriTemplate = "writeToXmlFile?token={token}")]
         void writeToXml(string token, List<SintomaWEB> listaSintomas, List<DiagnosticoWEB> listaDiagnosticos);
+      
+        //ADICIONAR PACIENTE:
+
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+        BodyStyle = WebMessageBodyStyle.Wrapped,
+        ResponseFormat = WebMessageFormat.Json,
+        UriTemplate = "adicionarPaciente?token={token}")]
+        Boolean adicionarPaciente(string token, string nome, int bi, DateTime dataNascimento);
+       
+        //PESQUISAR PACIENTE POR BI :
+
+        [OperationContract]
+        [WebInvoke(Method = "GET",
+        BodyStyle = WebMessageBodyStyle.Wrapped,
+        ResponseFormat = WebMessageFormat.Json,
+        UriTemplate = "getPacientePorBi?token={token}&bi={bi}")]
+        PacienteWEB getPacientePorBi(string token, int bi);
+
     }
-    
+
+    [DataContract]
+    public class PacienteWEB
+    {
+        [DataMember]
+        public int id { get; set; }
+        [DataMember]
+        public string nome { get; set; }
+        [DataMember]
+        public int bi { get; set; }
+        [DataMember]
+        public DateTime dataNascimento { get; set; }
+    }
+
     [DataContract]
     public class UtilizadorWEB
     {
