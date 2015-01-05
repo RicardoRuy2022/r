@@ -193,29 +193,36 @@ namespace AcupunturaWebService
 
         public void writeToXml(string token, List<SintomaWEB> listaSintomas, List<DiagnosticoWEB> listaDiagnosticos)
         {
-            checkAuthentication(token, false);
-            List<DomainModel.Sintoma> listaS = new List<DomainModel.Sintoma>();
-
-            foreach (SintomaWEB s in listaSintomas)
+            try
             {
-                DomainModel.Sintoma sin = new DomainModel.Sintoma(s.nome);
-                listaS.Add(sin);
-            }
+                checkAuthentication(token, false);
+                List<DomainModel.Sintoma> listaS = new List<DomainModel.Sintoma>();
 
-            List<DomainModel.Diagnostico> listaD = new List<DomainModel.Diagnostico>();
-
-            foreach (DiagnosticoWEB d in listaDiagnosticos)
-            {
-                List<DomainModel.Sintoma> listaSint = new List<DomainModel.Sintoma>();
-                foreach (SintomaWEB sweb in d.listaSintomas)
+                foreach (SintomaWEB s in listaSintomas)
                 {
-                    DomainModel.Sintoma sint = new DomainModel.Sintoma(sweb.nome);
-                    listaSint.Add(sint);
+                    DomainModel.Sintoma sin = new DomainModel.Sintoma(s.nome);
+                    listaS.Add(sin);
                 }
-                DomainModel.Diagnostico diag = new DomainModel.Diagnostico(d.orgao, d.nome, d.descricao, d.tratamento, listaSint);
-                listaD.Add(diag);
+
+                List<DomainModel.Diagnostico> listaD = new List<DomainModel.Diagnostico>();
+
+                foreach (DiagnosticoWEB d in listaDiagnosticos)
+                {
+                    List<DomainModel.Sintoma> listaSint = new List<DomainModel.Sintoma>();
+                    foreach (SintomaWEB sweb in d.listaSintomas)
+                    {
+                        DomainModel.Sintoma sint = new DomainModel.Sintoma(sweb.nome);
+                        listaSint.Add(sint);
+                    }
+                    DomainModel.Diagnostico diag = new DomainModel.Diagnostico(d.orgao, d.nome, d.descricao, d.tratamento, listaSint);
+                    listaD.Add(diag);
+                }
+                XmlHandler.writeToXmlFile(listaS, listaD);
             }
-            XmlHandler.writeToXmlFile(listaS, listaD);
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }
