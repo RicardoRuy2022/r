@@ -8,11 +8,11 @@ namespace DomainModel
 {
     public class Diagnostico
     {
-        string orgao;
-        string nome;
-        string descricao;
-        string tratamento;
-        List<Sintoma> listaSintomas;
+        string orgao { get; set; }
+        string nome { get; set; }
+        string descricao { get; set; }
+        string tratamento { get; set; }
+        List<Sintoma> listaSintomas { get; set; }
 
         public Diagnostico(string orgao, string nome, string descricao, string tratamento, List<Sintoma> listaSintomas)
         {
@@ -21,32 +21,6 @@ namespace DomainModel
             this.descricao = descricao;
             this.tratamento = tratamento;
             this.listaSintomas = listaSintomas;
-        }
-
-        public String getOrgao
-        {
-            get;
-            set;
-        }
-        public String getNome
-        {
-            get;
-            set;
-        }
-        public String getDescricao
-        {
-            get;
-            set;
-        }
-        public String getTratamento
-        {
-            get;
-            set;
-        }
-        public List<Sintoma> getListaSintomas
-        {
-            get;
-            set;
         }
     }
 }
