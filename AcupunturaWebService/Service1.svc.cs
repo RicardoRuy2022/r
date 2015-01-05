@@ -217,5 +217,22 @@ namespace AcupunturaWebService
             }
             XmlHandler.writeToXmlFile(listaS, listaD);
         }
+
+        public Boolean adicionarPaciente(string token, string nome, int bi, DateTime dataNascimento) {
+            checkAuthentication(token, false);
+            return dbHandler.adicionarPaciente(nome, bi, dataNascimento);
+        }
+        public PacienteWEB getPacientePorBi(string token, int bi)
+        {
+            checkAuthentication(token, false);
+            PacienteWEB pweb = new PacienteWEB();
+            Paciente p = dbHandler.getPacientePorBi(bi);
+            pweb.id = p.Id;
+            pweb.nome = p.nome;
+            pweb.bi = p.bi;
+            pweb.dataNascimento = p.data_nascimento;
+            return pweb;
+        }
+
     }
 }
