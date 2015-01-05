@@ -42,6 +42,7 @@ namespace DomainModel
         public List<Sintoma> getListaSintomas
         {
             get { return listaSintomas; }
+            set { listaSintomas = value; }
         }
     }
 }
