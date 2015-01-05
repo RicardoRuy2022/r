@@ -47,11 +47,10 @@ namespace AcupunturaWebService
         
         [OperationContract]
         [WebInvoke(Method = "POST",
+        BodyStyle=WebMessageBodyStyle.Wrapped,
         ResponseFormat = WebMessageFormat.Json,
-        UriTemplate = "writeToXmlFile?token={token}&listaSintomas={listaSintomas}&listaDiagnosticos={listaDiagnosticos}")]
-        //Devia estar assim:
+        UriTemplate = "writeToXmlFile?token={token}")]
         void writeToXml(string token, List<Sintomma> listaSintomas, List<Diagnostico> listaDiagnosticos);
-        //void writeToXml(string token, string listaSintomas, string listaDiagnosticos);
     }
     
     [DataContract]
