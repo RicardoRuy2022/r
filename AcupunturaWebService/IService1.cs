@@ -59,7 +59,25 @@ namespace AcupunturaWebService
         BodyStyle = WebMessageBodyStyle.Wrapped,
         ResponseFormat = WebMessageFormat.Json,
         UriTemplate = "adicionarPaciente?token={token}")]
-        Boolean adicionarPaciente(string token, string nome, int bi, DateTime dataNascimento);
+        Boolean adicionarPaciente(string token, string nome, int bi, DateTime dataNascimento, Boolean isAdmin);
+
+        //ADICIONAR TERAPEUTA:
+
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+        BodyStyle = WebMessageBodyStyle.Wrapped,
+        ResponseFormat = WebMessageFormat.Json,
+        UriTemplate = "adicionarTerapeuta?token={token}")]
+        Boolean adicionarTerapeuta(string token, string nome, int bi, DateTime dataNascimento,Boolean isAdmin);
+        
+        //ADICIONAR ADMINISTRADOR:
+
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+        BodyStyle = WebMessageBodyStyle.Wrapped,
+        ResponseFormat = WebMessageFormat.Json,
+        UriTemplate = "adicionarAdministrador?token={token}")]
+        Boolean adicionarAdministrador(string token, string username, string password, Boolean isAdmin);
        
         //PESQUISAR PACIENTE POR BI :
 
@@ -68,10 +86,60 @@ namespace AcupunturaWebService
         BodyStyle = WebMessageBodyStyle.Wrapped,
         ResponseFormat = WebMessageFormat.Json,
         UriTemplate = "getPacientePorBi?token={token}&bi={bi}")]
-        PacienteWEB getPacientePorBi(string token, int bi);
+        PacienteWEB getPacientePorBi(string token, int bi, Boolean isAdmin, int idTerapeuta);
 
+        //PESQUISAR TERAPEUTA POR BI :
+
+        [OperationContract]
+        [WebInvoke(Method = "GET",
+        BodyStyle = WebMessageBodyStyle.Wrapped,
+        ResponseFormat = WebMessageFormat.Json,
+        UriTemplate = "getTerapeutaPorBi?token={token}&bi={bi}")]
+        TerapeutaWEB getTerapeutaPorBi(string token, int bi, Boolean isAdmin);
+
+        //REMOVER PACIENTE
+
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+        BodyStyle = WebMessageBodyStyle.Wrapped,
+        ResponseFormat = WebMessageFormat.Json,
+        UriTemplate = "removerPaciente?token={token}&bi={bi}")]
+        Boolean removerPaciente(string token, int bi, Boolean isAdmin, int idTerapeuta);
+
+        //REMOVER TERAPEUTA
+
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+        BodyStyle = WebMessageBodyStyle.Wrapped,
+        ResponseFormat = WebMessageFormat.Json,
+        UriTemplate = "removerTerapeuta?token={token}&bi={bi}")]
+        Boolean removerTerapeuta(string token, int bi, Boolean isAdmin);
+
+        //UPDATE TERAPEUTA NO PACIENTE
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+        BodyStyle = WebMessageBodyStyle.Wrapped,
+        ResponseFormat = WebMessageFormat.Json,
+        UriTemplate = "updateDoTerapeutaAoPaciente?token={token}&Id={Id}")]
+        Boolean updateDoTerapeutaAoPaciente(string token, int id, Boolean isAdmin);
+       
+        //EDITAR PACIENTE
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+        BodyStyle = WebMessageBodyStyle.Wrapped,
+        ResponseFormat = WebMessageFormat.Json,
+        UriTemplate = "editarPaciente?token={token}")]
+        Boolean editarPaciente(string token, int idTerapeuta, string nome, int bi, DateTime dataNascimento);
+        
+        //EDITAR TERAPEUTA
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+        BodyStyle = WebMessageBodyStyle.Wrapped,
+        ResponseFormat = WebMessageFormat.Json,
+        UriTemplate = "editarTerapeuta?token={token}")]
+        Boolean editarTerapeuta(string token, string nome, int bi, DateTime dataNascimento, string username, string password, Boolean isAdmin);
+       
         //GET LISTA SINTOMAS
-
         [OperationContract]
         [WebInvoke(Method = "GET",
         BodyStyle = WebMessageBodyStyle.Wrapped,
@@ -80,13 +148,25 @@ namespace AcupunturaWebService
         List<SintomaWEB> getListaSintomasXml(string token);
 
         //GET LISTA DIAGNOSTICOS DEPENDENDO DE UMA LISTA DE SINTOMAS
-
         [OperationContract]
         [WebInvoke(Method = "POST",
         BodyStyle = WebMessageBodyStyle.Wrapped,
         ResponseFormat = WebMessageFormat.Json,
         UriTemplate = "getListaDiagnosticosXml?token={token}")]
         List<string> getListaDiagnosticosXml(string token, List<SintomaWEB> listaSintomasWeb);
+    }
+    
+        [DataContract]
+    public class TerapeutaWEB
+    {
+        [DataMember]
+        public int id { get; set; }
+        [DataMember]
+        public string nome { get; set; }
+        [DataMember]
+        public int bi { get; set; }
+        [DataMember]
+        public DateTime dataNascimento { get; set; }
     }
 
     [DataContract]

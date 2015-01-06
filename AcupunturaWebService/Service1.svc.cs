@@ -227,20 +227,81 @@ namespace AcupunturaWebService
 
         public Boolean adicionarPaciente(string token, string nome, int bi, DateTime dataNascimento) {
             checkAuthentication(token, false);
+            Boolean isAdministrador = isAdmin(token);
             int idUtilizador = Convert.ToInt32(tokens[token].Utilizador.id.ToString());
-            return dbHandler.adicionarPaciente(nome, bi, dataNascimento,idUtilizador);
+            return dbHandler.adicionarPaciente(nome, bi, dataNascimento, idUtilizador, isAdministrador);
         }
-        public PacienteWEB getPacientePorBi(string token, int bi)
+        public Boolean adicionarTerapeuta(string token, string nome, int bi, DateTime dataNascimento, string username, string password)
+        {
+            checkAuthentication(token, false);
+            Boolean isAdministrador = isAdmin(token);
+            return dbHandler.adicionarTerapeuta(nome, bi, dataNascimento,username, password, isAdministrador );
+        }
+        public Boolean adicionarAdministrador(string token, string username, string password) {
+            checkAuthentication(token, false);
+            Boolean isAdministrador = isAdmin(token);
+            return dbHandler.adicionarAdministrador(username, password, isAdministrador);
+
+        }
+        public Boolean removerPaciente(string token, int bi, int idTerapeuta)
+        {
+            checkAuthentication(token, false);
+            Boolean isAdministrador = isAdmin(token);
+            return dbHandler.removerPaciente(bi, isAdministrador, idTerapeuta);
+
+        }
+        public Boolean removerTerapeuta(string token, int bi) {
+            checkAuthentication(token, false);
+            Boolean isAdministrador = isAdmin(token);
+            return dbHandler.removerTerapeuta(bi, isAdministrador);
+        }
+        public Boolean updateDoTerapeutaAoPaciente(string token, int idTerapeuta)
+        {
+            checkAuthentication(token, false);
+            Boolean isAdministrador = isAdmin(token);
+            return dbHandler.updateDoTerapeutaAoPaciente(idTerapeuta, isAdministrador);
+
+        }
+
+        public Boolean editarPaciente(string token, int idTerapeuta, string nome, int bi, DateTime dataNascimento)
+        {
+            checkAuthentication(token, false);
+            Boolean isAdministrador = isAdmin(token);
+            return dbHandler.editarPaciente(idTerapeuta, isAdministrador, nome , bi, dataNascimento);
+
+        }
+        public Boolean editarTerapeuta(string token,string nome, int bi, DateTime dataNascimento, string username, string password) {
+            checkAuthentication(token, false);
+            Boolean isAdministrador = isAdmin(token);
+            return dbHandler.editarTerapeuta(nome, bi, dataNascimento, username, password, isAdministrador);
+
+        }
+        public PacienteWEB getPacientePorBi(string token, int bi, int idTerapeuta)
         {
             checkAuthentication(token, false);
             PacienteWEB pweb = new PacienteWEB();
-            Paciente p = dbHandler.getPacientePorBi(bi);
+            Boolean isAdminitrador = isAdmin(token);
+            Paciente p = dbHandler.getPacientePorBi(bi, isAdminitrador, idTerapeuta);
             pweb.id = p.Id;
             pweb.nome = p.nome;
             pweb.bi = p.bi;
             pweb.dataNascimento = p.data_nascimento;
             return pweb;
         }
+    
+        public TerapeutaWEB getTerapeutaPorBi(string token, int bi)
+        {
+            checkAuthentication(token, false);
+            Boolean isAdminitrador = isAdmin(token);
+            TerapeutaWEB tweb = new TerapeutaWEB();
+            Terapeuta t = dbHandler.getTerapeutaPorBi(bi, isAdminitrador);
+            tweb.id = t.Id;
+            tweb.nome = t.nome;
+            tweb.bi = t.bi;
+            tweb.dataNascimento = t.data_nascimento;
+            return tweb;
+        }
+
 
         public List<SintomaWEB> getListaSintomasXml(string token)
         {
