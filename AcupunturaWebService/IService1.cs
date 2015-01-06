@@ -22,7 +22,7 @@ namespace AcupunturaWebService
         [OperationContract]
         [WebInvoke(Method = "POST",
         ResponseFormat = WebMessageFormat.Json,
-        UriTemplate = "logout")]
+        UriTemplate = "logout?token={token}")]
         void logOut(string token);
 
         [OperationContract]
@@ -147,6 +147,15 @@ namespace AcupunturaWebService
         UriTemplate = "getListaSintomasXml?token={token}")]
         List<SintomaWEB> getListaSintomasXml(string token);
 
+        //GET LISTA DE TODOS OS DIAGNOSTICOS
+
+        [OperationContract]
+        [WebInvoke(Method = "GET",
+        BodyStyle = WebMessageBodyStyle.Wrapped,
+        ResponseFormat = WebMessageFormat.Json,
+        UriTemplate = "getAllDiagnosticosXml?token={token}")]
+        List<string> getAllDiagnosticosXml(string token);
+
         //GET LISTA DIAGNOSTICOS DEPENDENDO DE UMA LISTA DE SINTOMAS
         [OperationContract]
         [WebInvoke(Method = "POST",
@@ -154,6 +163,15 @@ namespace AcupunturaWebService
         ResponseFormat = WebMessageFormat.Json,
         UriTemplate = "getListaDiagnosticosXml?token={token}")]
         List<string> getListaDiagnosticosXml(string token, List<SintomaWEB> listaSintomasWeb);
+
+        //VALIDAR COM O SCHEMA
+
+        [OperationContract]
+        [WebInvoke(Method = "GET",
+        BodyStyle = WebMessageBodyStyle.Wrapped,
+        ResponseFormat = WebMessageFormat.Json,
+        UriTemplate = "validaXml?token={token}")]
+        string validaXml(string token);
     }
     
         [DataContract]

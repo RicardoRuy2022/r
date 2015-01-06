@@ -4,13 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Schema;
 using DomainModel;
 
 namespace AcupunturaXML
 {
     public class XmlHandler
     {
-        public static void writeToXmlFile(List<DomainModel.Sintoma> listaSintomas, List<DomainModel.Diagnostico> listaDiagnosticos)
+        //Schema: ------
+        private static bool valido = true;
+        private static string erro = "";
+        //--------------
+
+        public static void writeToXmlFile(List<DomainModel.Sintoma> listaSintomas, List<DomainModel.Diagnostico> listaDiagnosticos, String path)
         {
             try
             {
@@ -64,7 +70,7 @@ namespace AcupunturaXML
                 }
                 root.AppendChild(diagnosticos);
                 //Gravar no ficheiro XML
-                doc.Save(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
+                doc.Save(path);
             }
             catch (Exception ex)
             {
@@ -72,12 +78,12 @@ namespace AcupunturaXML
             }
         }
 
-        public static List<DomainModel.Sintoma> getListaSintomasXml()
+        public static List<DomainModel.Sintoma> getListaSintomasXml(String path)
         {
             List<DomainModel.Sintoma> listaSintomas = new List<Sintoma>();
 
             XmlDocument doc = new XmlDocument();
-            doc.Load(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
+            doc.Load(path);
 
             foreach (XmlNode node in doc.SelectNodes("Acupuntura/Sintomas/Sintoma"))
             {
@@ -88,12 +94,50 @@ namespace AcupunturaXML
             return listaSintomas;
         }
 
-        public static List<string> getListaDiagnosticosXml(List<Sintoma> sintomasSelecionados)
+        //public static List<DomainModel.Diagnostico> getAllDiagnosticosXml(String path)
+        //{
+        //    List<DomainModel.Diagnostico> listaDiagnosticos = new List<Diagnostico>();
+
+        //    XmlDocument doc = new XmlDocument();
+        //    doc.Load(path);
+        //    foreach (XmlNode nodeDiagnostico in doc.SelectNodes("//Diagnostico"))
+        //    {
+        //        String nome = nodeDiagnostico.ChildNodes[0].InnerText;
+        //        String orgao = nodeDiagnostico.ChildNodes[1].InnerText;
+        //        String tratamento = nodeDiagnostico.ChildNodes[2].InnerText;
+        //        String descricao = nodeDiagnostico.Attributes[0].Value;
+        //        List<Sintoma> listaSin = new List<Sintoma>();
+        //        foreach (XmlNode nodeSintoma in nodeDiagnostico.LastChild.ChildNodes)
+        //        {
+        //            DomainModel.Sintoma sin = new Sintoma(nodeSintoma.InnerText);
+        //            listaSin.Add(sin);
+        //        }
+
+        //        DomainModel.Diagnostico diag = new Diagnostico(orgao, nome, descricao, tratamento, listaSin);
+        //    }
+
+        //    return listaDiagnosticos;
+        //}
+
+        public static List<string> getAllDiagnosticosXml(String path)
         {
             List<string> listaDiagnosticos = new List<string>();
 
             XmlDocument doc = new XmlDocument();
-            doc.Load(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
+            doc.Load(path);
+            foreach (XmlNode nodeDiagnostico in doc.SelectNodes("//Diagnostico"))
+            {
+                listaDiagnosticos.Add(nodeDiagnostico.Attributes[0].Value);
+            }
+            return listaDiagnosticos;
+        }
+
+        public static List<string> getListaDiagnosticosXml(List<Sintoma> sintomasSelecionados, String path)
+        {
+            List<string> listaDiagnosticos = new List<string>();
+
+            XmlDocument doc = new XmlDocument();
+            doc.Load(path);
             foreach (XmlNode nodeDiagnostico in doc.SelectNodes("//Diagnostico"))
             {
                 int count = 0;
@@ -124,5 +168,49 @@ namespace AcupunturaXML
             }
             return listaDiagnosticos;
         }
+
+        //Validação Schema: ---------------------------------------
+
+        public static string validaXml(string xmlPath, string schemaPath)
+        {
+            string resultado = "";
+            XmlReaderSettings settings = new XmlReaderSettings();
+            settings.ValidationType = ValidationType.Schema;
+            XmlSchemaSet schemas = new XmlSchemaSet();
+            settings.Schemas = schemas;
+            schemas.Add(null, schemaPath);
+            settings.ValidationEventHandler += ValidationEventHandler;
+            XmlReader validator = XmlReader.Create(xmlPath, settings);
+            valido = true;
+
+            try
+            {
+                while (validator.Read()) { }
+            }
+            catch (XmlException err)
+            {
+
+                resultado = "ERRO! Ocurreu um erro durante o processo de validação!\n" + err.Message;
+                valido = true;
+            }
+            finally
+            {
+                validator.Close();
+                if (valido)
+                    resultado = "Ficheiro XML Válido.";
+                else
+                {
+                    resultado = "ERRO ao validar!\nFicheiro XML Inválido de acordo com o Schema selecionado!\nDescrição:\n" + erro;
+                }
+            }
+            return resultado;
+        }
+        public static void ValidationEventHandler(Object sender, ValidationEventArgs e)
+        {
+            valido = false;
+            erro = e.Message;
+        }
+
+        //---------------------------------------------------------
     }
 }

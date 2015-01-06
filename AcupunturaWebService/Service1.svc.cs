@@ -5,6 +5,8 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
+using System.Web.Hosting;
+using System.IO;
 using AcupunturaXML;
 using DomainModel;
 
@@ -18,6 +20,8 @@ namespace AcupunturaWebService
         DBHandler dbHandler = new DBHandler();
         private Dictionary<string, UtilizadorWEB> utilizadores;
         private Dictionary<string, Token> tokens;
+        private static String xmlPath = Path.Combine(HostingEnvironment.ApplicationPhysicalPath, "App_Data", "AcupunturaXml.xml");
+        private static String schemaPath = Path.Combine(HostingEnvironment.ApplicationPhysicalPath, "App_Data", "AcupunturaXsd.xsd");
 
         public Service1()
         {
@@ -217,7 +221,7 @@ namespace AcupunturaWebService
                     DomainModel.Diagnostico diag = new DomainModel.Diagnostico(d.orgao, d.nome, d.descricao, d.tratamento, listaSint);
                     listaD.Add(diag);
                 }
-                XmlHandler.writeToXmlFile(listaS, listaD);
+                XmlHandler.writeToXmlFile(listaS, listaD, xmlPath);
             }
             catch (Exception ex)
             {
@@ -307,13 +311,44 @@ namespace AcupunturaWebService
         {
             checkAuthentication(token, false);
             List<SintomaWEB> listaSintomasWeb = new List<SintomaWEB>();
-            foreach (DomainModel.Sintoma s in XmlHandler.getListaSintomasXml())
+            foreach (DomainModel.Sintoma s in XmlHandler.getListaSintomasXml(xmlPath))
             {
                 SintomaWEB sweb = new SintomaWEB();
                 sweb.nome = s.getNome;
                 listaSintomasWeb.Add(sweb);
             }
             return listaSintomasWeb;
+        }
+
+        //public List<DiagnosticoWEB> getAllDiagnosticosXml(string token)
+        //{
+        //    checkAuthentication(token, false);
+        //    List<DiagnosticoWEB> listaAllDiagnosticosWeb = new List<DiagnosticoWEB>();
+        //    foreach (DomainModel.Diagnostico d in XmlHandler.getAllDiagnosticosXml(path))
+        //    {
+        //        DiagnosticoWEB dweb = new DiagnosticoWEB();
+        //        dweb.nome = d.getNome;
+        //        dweb.orgao = d.getOrgao;
+        //        dweb.descricao = d.getDescricao;
+        //        dweb.tratamento = d.getTratamento;
+        //        List<SintomaWEB> listaSinWeb = new List<SintomaWEB>();
+        //        foreach (DomainModel.Sintoma s in d.getListaSintomas)
+        //        {
+        //            SintomaWEB sweb = new SintomaWEB();
+        //            sweb.nome = s.getNome;
+        //            listaSinWeb.Add(sweb);
+        //        }
+        //        dweb.listaSintomas = listaSinWeb;
+        //        listaAllDiagnosticosWeb.Add(dweb);
+        //    }
+        //    return listaAllDiagnosticosWeb;
+        //}
+
+        public List<string> getAllDiagnosticosXml(string token)
+        {
+            checkAuthentication(token, false);
+            List<string> listaAllDiag = XmlHandler.getAllDiagnosticosXml(xmlPath);
+            return listaAllDiag;
         }
 
         public List<string> getListaDiagnosticosXml(string token, List<SintomaWEB> listaSintomasWeb)
@@ -327,9 +362,23 @@ namespace AcupunturaWebService
             }
             List<string> listaDiagnosticos = new List<string>();
 
-            listaDiagnosticos = XmlHandler.getListaDiagnosticosXml(listaSint);
+            listaDiagnosticos = XmlHandler.getListaDiagnosticosXml(listaSint,xmlPath);
 
             return listaDiagnosticos;
+        }
+
+        //Schema:
+        public string validaXml(string token)
+        {
+            try
+            {
+                checkAuthentication(token, false);
+                return XmlHandler.validaXml(xmlPath, schemaPath);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }
