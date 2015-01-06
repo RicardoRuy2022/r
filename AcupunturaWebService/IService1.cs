@@ -59,7 +59,7 @@ namespace AcupunturaWebService
         BodyStyle = WebMessageBodyStyle.Wrapped,
         ResponseFormat = WebMessageFormat.Json,
         UriTemplate = "adicionarPaciente?token={token}")]
-        Boolean adicionarPaciente(string token, string nome, int bi, DateTime dataNascimento, Boolean isAdmin);
+        Boolean adicionarPaciente(string token, string nome, int bi, DateTime dataNascimento);
 
         //ADICIONAR TERAPEUTA:
 
@@ -68,7 +68,7 @@ namespace AcupunturaWebService
         BodyStyle = WebMessageBodyStyle.Wrapped,
         ResponseFormat = WebMessageFormat.Json,
         UriTemplate = "adicionarTerapeuta?token={token}")]
-        Boolean adicionarTerapeuta(string token, string nome, int bi, DateTime dataNascimento,Boolean isAdmin);
+        Boolean adicionarTerapeuta(string token, string nome, int bi, DateTime dataNascimento, string username, string password);
         
         //ADICIONAR ADMINISTRADOR:
 
@@ -77,25 +77,25 @@ namespace AcupunturaWebService
         BodyStyle = WebMessageBodyStyle.Wrapped,
         ResponseFormat = WebMessageFormat.Json,
         UriTemplate = "adicionarAdministrador?token={token}")]
-        Boolean adicionarAdministrador(string token, string username, string password, Boolean isAdmin);
+        Boolean adicionarAdministrador(string token, string username, string password);
        
         //PESQUISAR PACIENTE POR BI :
 
         [OperationContract]
-        [WebInvoke(Method = "GET",
+        [WebInvoke(Method = "POST",
         BodyStyle = WebMessageBodyStyle.Wrapped,
         ResponseFormat = WebMessageFormat.Json,
         UriTemplate = "getPacientePorBi?token={token}&bi={bi}")]
-        PacienteWEB getPacientePorBi(string token, int bi, Boolean isAdmin, int idTerapeuta);
+        PacienteWEB getPacientePorBi(string token, int bi, int idTerapeuta);
 
         //PESQUISAR TERAPEUTA POR BI :
 
         [OperationContract]
-        [WebInvoke(Method = "GET",
+        [WebInvoke(Method = "POST",
         BodyStyle = WebMessageBodyStyle.Wrapped,
         ResponseFormat = WebMessageFormat.Json,
         UriTemplate = "getTerapeutaPorBi?token={token}&bi={bi}")]
-        TerapeutaWEB getTerapeutaPorBi(string token, int bi, Boolean isAdmin);
+        TerapeutaWEB getTerapeutaPorBi(string token, int bi);
 
         //REMOVER PACIENTE
 
@@ -104,7 +104,7 @@ namespace AcupunturaWebService
         BodyStyle = WebMessageBodyStyle.Wrapped,
         ResponseFormat = WebMessageFormat.Json,
         UriTemplate = "removerPaciente?token={token}&bi={bi}")]
-        Boolean removerPaciente(string token, int bi, Boolean isAdmin, int idTerapeuta);
+        Boolean removerPaciente(string token, int bi, int idTerapeuta);
 
         //REMOVER TERAPEUTA
 
@@ -113,7 +113,7 @@ namespace AcupunturaWebService
         BodyStyle = WebMessageBodyStyle.Wrapped,
         ResponseFormat = WebMessageFormat.Json,
         UriTemplate = "removerTerapeuta?token={token}&bi={bi}")]
-        Boolean removerTerapeuta(string token, int bi, Boolean isAdmin);
+        Boolean removerTerapeuta(string token, int bi);
 
         //UPDATE TERAPEUTA NO PACIENTE
         [OperationContract]
@@ -121,7 +121,7 @@ namespace AcupunturaWebService
         BodyStyle = WebMessageBodyStyle.Wrapped,
         ResponseFormat = WebMessageFormat.Json,
         UriTemplate = "updateDoTerapeutaAoPaciente?token={token}&Id={Id}")]
-        Boolean updateDoTerapeutaAoPaciente(string token, int id, Boolean isAdmin);
+        Boolean updateDoTerapeutaAoPaciente(string token, int id);
        
         //EDITAR PACIENTE
         [OperationContract]
@@ -137,7 +137,7 @@ namespace AcupunturaWebService
         BodyStyle = WebMessageBodyStyle.Wrapped,
         ResponseFormat = WebMessageFormat.Json,
         UriTemplate = "editarTerapeuta?token={token}")]
-        Boolean editarTerapeuta(string token, string nome, int bi, DateTime dataNascimento, string username, string password, Boolean isAdmin);
+        Boolean editarTerapeuta(string token, string nome, int bi, DateTime dataNascimento, string username, string password);
        
         //GET LISTA SINTOMAS
         [OperationContract]
