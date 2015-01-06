@@ -94,7 +94,7 @@ namespace AcupunturaXML
 
             XmlDocument doc = new XmlDocument();
             doc.Load(path);
-            foreach (XmlNode nodeDiagnostico in doc.SelectNodes("//Diagnostico"))
+            foreach (XmlNode nodeDiagnostico in doc.SelectNodes("//Diagnosticos"))
             {
                 String nome = nodeDiagnostico.ChildNodes[0].InnerText;
                 String orgao = nodeDiagnostico.ChildNodes[1].InnerText;
