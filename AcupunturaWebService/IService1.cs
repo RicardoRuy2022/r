@@ -22,7 +22,7 @@ namespace AcupunturaWebService
         [OperationContract]
         [WebInvoke(Method = "POST",
         ResponseFormat = WebMessageFormat.Json,
-        UriTemplate = "logout")]
+        UriTemplate = "logout?token={token}")]
         void logOut(string token);
 
         [OperationContract]
