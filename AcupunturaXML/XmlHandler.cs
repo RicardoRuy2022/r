@@ -88,28 +88,41 @@ namespace AcupunturaXML
             return listaSintomas;
         }
 
-        public static List<DomainModel.Diagnostico> getAllDiagnosticosXml(String path)
+        //public static List<DomainModel.Diagnostico> getAllDiagnosticosXml(String path)
+        //{
+        //    List<DomainModel.Diagnostico> listaDiagnosticos = new List<Diagnostico>();
+
+        //    XmlDocument doc = new XmlDocument();
+        //    doc.Load(path);
+        //    foreach (XmlNode nodeDiagnostico in doc.SelectNodes("//Diagnostico"))
+        //    {
+        //        String nome = nodeDiagnostico.ChildNodes[0].InnerText;
+        //        String orgao = nodeDiagnostico.ChildNodes[1].InnerText;
+        //        String tratamento = nodeDiagnostico.ChildNodes[2].InnerText;
+        //        String descricao = nodeDiagnostico.Attributes[0].Value;
+        //        List<Sintoma> listaSin = new List<Sintoma>();
+        //        foreach (XmlNode nodeSintoma in nodeDiagnostico.LastChild.ChildNodes)
+        //        {
+        //            DomainModel.Sintoma sin = new Sintoma(nodeSintoma.InnerText);
+        //            listaSin.Add(sin);
+        //        }
+
+        //        DomainModel.Diagnostico diag = new Diagnostico(orgao, nome, descricao, tratamento, listaSin);
+        //    }
+
+        //    return listaDiagnosticos;
+        //}
+
+        public static List<string> getAllDiagnosticosXml(String path)
         {
-            List<DomainModel.Diagnostico> listaDiagnosticos = new List<Diagnostico>();
+            List<string> listaDiagnosticos = new List<string>();
 
             XmlDocument doc = new XmlDocument();
             doc.Load(path);
-            foreach (XmlNode nodeDiagnostico in doc.SelectNodes("//Diagnosticos"))
+            foreach (XmlNode nodeDiagnostico in doc.SelectNodes("//Diagnostico"))
             {
-                String nome = nodeDiagnostico.ChildNodes[0].InnerText;
-                String orgao = nodeDiagnostico.ChildNodes[1].InnerText;
-                String tratamento = nodeDiagnostico.ChildNodes[2].InnerText;
-                String descricao = nodeDiagnostico.Attributes[0].Value;
-                List<Sintoma> listaSin = new List<Sintoma>();
-                foreach (XmlNode nodeSintoma in nodeDiagnostico.LastChild.ChildNodes)
-                {
-                    DomainModel.Sintoma sin = new Sintoma(nodeSintoma.InnerText);
-                    listaSin.Add(sin);
-                }
-
-                DomainModel.Diagnostico diag = new Diagnostico(orgao, nome, descricao, tratamento, listaSin);
+                listaDiagnosticos.Add(nodeDiagnostico.Attributes[0].Value);
             }
-
             return listaDiagnosticos;
         }
 

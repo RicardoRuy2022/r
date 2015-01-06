@@ -86,7 +86,7 @@ namespace AcupunturaWebService
         BodyStyle = WebMessageBodyStyle.Wrapped,
         ResponseFormat = WebMessageFormat.Json,
         UriTemplate = "getAllDiagnosticosXml?token={token}")]
-        List<DiagnosticoWEB> getAllDiagnosticosXml(string token);
+        List<string> getAllDiagnosticosXml(string token);
 
         //GET LISTA DIAGNOSTICOS DEPENDENDO DE UMA LISTA DE SINTOMAS
 

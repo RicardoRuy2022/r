@@ -258,28 +258,35 @@ namespace AcupunturaWebService
             return listaSintomasWeb;
         }
 
-        public List<DiagnosticoWEB> getAllDiagnosticosXml(string token)
+        //public List<DiagnosticoWEB> getAllDiagnosticosXml(string token)
+        //{
+        //    checkAuthentication(token, false);
+        //    List<DiagnosticoWEB> listaAllDiagnosticosWeb = new List<DiagnosticoWEB>();
+        //    foreach (DomainModel.Diagnostico d in XmlHandler.getAllDiagnosticosXml(path))
+        //    {
+        //        DiagnosticoWEB dweb = new DiagnosticoWEB();
+        //        dweb.nome = d.getNome;
+        //        dweb.orgao = d.getOrgao;
+        //        dweb.descricao = d.getDescricao;
+        //        dweb.tratamento = d.getTratamento;
+        //        List<SintomaWEB> listaSinWeb = new List<SintomaWEB>();
+        //        foreach (DomainModel.Sintoma s in d.getListaSintomas)
+        //        {
+        //            SintomaWEB sweb = new SintomaWEB();
+        //            sweb.nome = s.getNome;
+        //            listaSinWeb.Add(sweb);
+        //        }
+        //        dweb.listaSintomas = listaSinWeb;
+        //        listaAllDiagnosticosWeb.Add(dweb);
+        //    }
+        //    return listaAllDiagnosticosWeb;
+        //}
+
+        public List<string> getAllDiagnosticosXml(string token)
         {
             checkAuthentication(token, false);
-            List<DiagnosticoWEB> listaAllDiagnosticosWeb = new List<DiagnosticoWEB>();
-            foreach (DomainModel.Diagnostico d in XmlHandler.getAllDiagnosticosXml(path))
-            {
-                DiagnosticoWEB dweb = new DiagnosticoWEB();
-                dweb.nome = d.getNome;
-                dweb.orgao = d.getOrgao;
-                dweb.descricao = d.getDescricao;
-                dweb.tratamento = d.getTratamento;
-                List<SintomaWEB> listaSinWeb = new List<SintomaWEB>();
-                foreach (DomainModel.Sintoma s in d.getListaSintomas)
-                {
-                    SintomaWEB sweb = new SintomaWEB();
-                    sweb.nome = s.getNome;
-                    listaSinWeb.Add(sweb);
-                }
-                dweb.listaSintomas = listaSinWeb;
-                listaAllDiagnosticosWeb.Add(dweb);
-            }
-            return listaAllDiagnosticosWeb;
+            List<string> listaAllDiag = XmlHandler.getAllDiagnosticosXml(path);
+            return listaAllDiag;
         }
 
         public List<string> getListaDiagnosticosXml(string token, List<SintomaWEB> listaSintomasWeb)
