@@ -4,12 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Schema;
 using DomainModel;
 
 namespace AcupunturaXML
 {
     public class XmlHandler
     {
+        //Schema: ------
+        private static bool valido = true;
+        private static string erro = "";
+        //--------------
+
         public static void writeToXmlFile(List<DomainModel.Sintoma> listaSintomas, List<DomainModel.Diagnostico> listaDiagnosticos, String path)
         {
             try
@@ -162,5 +168,49 @@ namespace AcupunturaXML
             }
             return listaDiagnosticos;
         }
+
+        //Validação Schema: ---------------------------------------
+
+        public static string validaXml(string xmlPath, string schemaPath)
+        {
+            string resultado = "";
+            XmlReaderSettings settings = new XmlReaderSettings();
+            settings.ValidationType = ValidationType.Schema;
+            XmlSchemaSet schemas = new XmlSchemaSet();
+            settings.Schemas = schemas;
+            schemas.Add(null, schemaPath);
+            settings.ValidationEventHandler += ValidationEventHandler;
+            XmlReader validator = XmlReader.Create(xmlPath, settings);
+            valido = true;
+
+            try
+            {
+                while (validator.Read()) { }
+            }
+            catch (XmlException err)
+            {
+
+                resultado = "ERRO! Ocurreu um erro durante o processo de validação!\n" + err.Message;
+                valido = true;
+            }
+            finally
+            {
+                validator.Close();
+                if (valido)
+                    resultado = "Ficheiro XML Válido.";
+                else
+                {
+                    resultado = "ERRO ao validar!\nFicheiro XML Inválido de acordo com o Schema selecionado!\nDescrição:\n" + erro;
+                }
+            }
+            return resultado;
+        }
+        public static void ValidationEventHandler(Object sender, ValidationEventArgs e)
+        {
+            valido = false;
+            erro = e.Message;
+        }
+
+        //---------------------------------------------------------
     }
 }

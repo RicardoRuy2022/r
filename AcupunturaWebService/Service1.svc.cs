@@ -20,7 +20,8 @@ namespace AcupunturaWebService
         DBHandler dbHandler = new DBHandler();
         private Dictionary<string, UtilizadorWEB> utilizadores;
         private Dictionary<string, Token> tokens;
-        private static String path = Path.Combine(HostingEnvironment.ApplicationPhysicalPath, "App_Data", "AcupunturaXml.xml");
+        private static String xmlPath = Path.Combine(HostingEnvironment.ApplicationPhysicalPath, "App_Data", "AcupunturaXml.xml");
+        private static String schemaPath = Path.Combine(HostingEnvironment.ApplicationPhysicalPath, "App_Data", "AcupunturaXsd.xsd");
 
         public Service1()
         {
@@ -220,7 +221,7 @@ namespace AcupunturaWebService
                     DomainModel.Diagnostico diag = new DomainModel.Diagnostico(d.orgao, d.nome, d.descricao, d.tratamento, listaSint);
                     listaD.Add(diag);
                 }
-                XmlHandler.writeToXmlFile(listaS, listaD, path);
+                XmlHandler.writeToXmlFile(listaS, listaD, xmlPath);
             }
             catch (Exception ex)
             {
@@ -249,7 +250,7 @@ namespace AcupunturaWebService
         {
             checkAuthentication(token, false);
             List<SintomaWEB> listaSintomasWeb = new List<SintomaWEB>();
-            foreach (DomainModel.Sintoma s in XmlHandler.getListaSintomasXml(path))
+            foreach (DomainModel.Sintoma s in XmlHandler.getListaSintomasXml(xmlPath))
             {
                 SintomaWEB sweb = new SintomaWEB();
                 sweb.nome = s.getNome;
@@ -285,7 +286,7 @@ namespace AcupunturaWebService
         public List<string> getAllDiagnosticosXml(string token)
         {
             checkAuthentication(token, false);
-            List<string> listaAllDiag = XmlHandler.getAllDiagnosticosXml(path);
+            List<string> listaAllDiag = XmlHandler.getAllDiagnosticosXml(xmlPath);
             return listaAllDiag;
         }
 
@@ -300,9 +301,23 @@ namespace AcupunturaWebService
             }
             List<string> listaDiagnosticos = new List<string>();
 
-            listaDiagnosticos = XmlHandler.getListaDiagnosticosXml(listaSint,path);
+            listaDiagnosticos = XmlHandler.getListaDiagnosticosXml(listaSint,xmlPath);
 
             return listaDiagnosticos;
+        }
+
+        //Schema:
+        public string validaXml(string token)
+        {
+            try
+            {
+                checkAuthentication(token, false);
+                return XmlHandler.validaXml(xmlPath, schemaPath);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

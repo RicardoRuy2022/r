@@ -96,6 +96,15 @@ namespace AcupunturaWebService
         ResponseFormat = WebMessageFormat.Json,
         UriTemplate = "getListaDiagnosticosXml?token={token}")]
         List<string> getListaDiagnosticosXml(string token, List<SintomaWEB> listaSintomasWeb);
+
+        //VALIDAR COM O SCHEMA
+
+        [OperationContract]
+        [WebInvoke(Method = "GET",
+        BodyStyle = WebMessageBodyStyle.Wrapped,
+        ResponseFormat = WebMessageFormat.Json,
+        UriTemplate = "validaXml?token={token}")]
+        string validaXml(string token);
     }
 
     [DataContract]

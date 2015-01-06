@@ -107,9 +107,7 @@
       <DependentUpon>AcupunturaModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EntityDeploy Include="AcupunturaModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -129,6 +127,9 @@
       <LastGenOutput>AcupunturaModel.cs</LastGenOutput>
     </Content>
     <Content Include="packages.config" />
+    <None Include="App_Data\AcupunturaXsd.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
