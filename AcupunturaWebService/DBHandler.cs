@@ -50,13 +50,13 @@ namespace AcupunturaWebService
             return p;
         }
 
-        public Boolean adicionarPaciente(string nome, int bi, DateTime dataNascimento) {
+        public Boolean adicionarPaciente(string nome, int bi, DateTime dataNascimento, int idUtilizador) {
             Boolean resultado;
             Paciente p = new Paciente();
             p.nome = nome;
             p.bi = bi;
-            p.data_nascimento = dataNascimento;         
-            
+            p.data_nascimento = dataNascimento;
+            p.Terapeuta = getTerapeutaID(idUtilizador);
             try { 
             modelo.PacienteSet.Add(p);
             modelo.SaveChanges();
@@ -68,6 +68,11 @@ namespace AcupunturaWebService
             }
 
             return resultado;
+        }
+
+        public Terapeuta getTerapeutaID(int id) 
+        {
+            return modelo.TerapeutaSet.Where(i => i.Utilizador.Id == id).First();
         }
 
     }

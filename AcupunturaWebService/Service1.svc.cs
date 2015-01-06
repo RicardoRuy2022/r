@@ -227,7 +227,8 @@ namespace AcupunturaWebService
 
         public Boolean adicionarPaciente(string token, string nome, int bi, DateTime dataNascimento) {
             checkAuthentication(token, false);
-            return dbHandler.adicionarPaciente(nome, bi, dataNascimento);
+            int idUtilizador = Convert.ToInt32(tokens[token].Utilizador.id.ToString());
+            return dbHandler.adicionarPaciente(nome, bi, dataNascimento,idUtilizador);
         }
         public PacienteWEB getPacientePorBi(string token, int bi)
         {
@@ -241,5 +242,33 @@ namespace AcupunturaWebService
             return pweb;
         }
 
+        public List<SintomaWEB> getListaSintomasXml(string token)
+        {
+            checkAuthentication(token, false);
+            List<SintomaWEB> listaSintomasWeb = new List<SintomaWEB>();
+            foreach (DomainModel.Sintoma s in XmlHandler.getListaSintomasXml())
+            {
+                SintomaWEB sweb = new SintomaWEB();
+                sweb.nome = s.getNome;
+                listaSintomasWeb.Add(sweb);
+            }
+            return listaSintomasWeb;
+        }
+
+        public List<string> getListaDiagnosticosXml(string token, List<SintomaWEB> listaSintomasWeb)
+        {
+            checkAuthentication(token, false);
+            List<DomainModel.Sintoma> listaSint = new List<DomainModel.Sintoma>();
+            foreach (SintomaWEB sweb in listaSintomasWeb)
+            {
+                DomainModel.Sintoma sin = new DomainModel.Sintoma(sweb.nome);
+                listaSint.Add(sin);
+            }
+            List<string> listaDiagnosticos = new List<string>();
+
+            listaDiagnosticos = XmlHandler.getListaDiagnosticosXml(listaSint);
+
+            return listaDiagnosticos;
+        }
     }
 }
