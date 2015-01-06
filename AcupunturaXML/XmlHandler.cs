@@ -10,7 +10,7 @@ namespace AcupunturaXML
 {
     public class XmlHandler
     {
-        public static void writeToXmlFile(List<DomainModel.Sintoma> listaSintomas, List<DomainModel.Diagnostico> listaDiagnosticos)
+        public static void writeToXmlFile(List<DomainModel.Sintoma> listaSintomas, List<DomainModel.Diagnostico> listaDiagnosticos, String path)
         {
             try
             {
@@ -64,7 +64,7 @@ namespace AcupunturaXML
                 }
                 root.AppendChild(diagnosticos);
                 //Gravar no ficheiro XML
-                doc.Save(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
+                doc.Save(path);
             }
             catch (Exception ex)
             {
@@ -72,12 +72,12 @@ namespace AcupunturaXML
             }
         }
 
-        public static List<DomainModel.Sintoma> getListaSintomasXml()
+        public static List<DomainModel.Sintoma> getListaSintomasXml(String path)
         {
             List<DomainModel.Sintoma> listaSintomas = new List<Sintoma>();
 
             XmlDocument doc = new XmlDocument();
-            doc.Load(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
+            doc.Load(path);
 
             foreach (XmlNode node in doc.SelectNodes("Acupuntura/Sintomas/Sintoma"))
             {
@@ -88,12 +88,12 @@ namespace AcupunturaXML
             return listaSintomas;
         }
 
-        public static List<string> getListaDiagnosticosXml(List<Sintoma> sintomasSelecionados)
+        public static List<string> getListaDiagnosticosXml(List<Sintoma> sintomasSelecionados, String path)
         {
             List<string> listaDiagnosticos = new List<string>();
 
             XmlDocument doc = new XmlDocument();
-            doc.Load(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
+            doc.Load(path);
             foreach (XmlNode nodeDiagnostico in doc.SelectNodes("//Diagnostico"))
             {
                 int count = 0;

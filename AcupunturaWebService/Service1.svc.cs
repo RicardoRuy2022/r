@@ -5,6 +5,8 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
+using System.Web.Hosting;
+using System.IO;
 using AcupunturaXML;
 using DomainModel;
 
@@ -18,6 +20,7 @@ namespace AcupunturaWebService
         DBHandler dbHandler = new DBHandler();
         private Dictionary<string, UtilizadorWEB> utilizadores;
         private Dictionary<string, Token> tokens;
+        private static String path = Path.Combine(HostingEnvironment.ApplicationPhysicalPath, "App_Data", "AcupunturaXml.xml");
 
         public Service1()
         {
@@ -217,7 +220,7 @@ namespace AcupunturaWebService
                     DomainModel.Diagnostico diag = new DomainModel.Diagnostico(d.orgao, d.nome, d.descricao, d.tratamento, listaSint);
                     listaD.Add(diag);
                 }
-                XmlHandler.writeToXmlFile(listaS, listaD);
+                XmlHandler.writeToXmlFile(listaS, listaD, path);
             }
             catch (Exception ex)
             {
@@ -246,7 +249,7 @@ namespace AcupunturaWebService
         {
             checkAuthentication(token, false);
             List<SintomaWEB> listaSintomasWeb = new List<SintomaWEB>();
-            foreach (DomainModel.Sintoma s in XmlHandler.getListaSintomasXml())
+            foreach (DomainModel.Sintoma s in XmlHandler.getListaSintomasXml(path))
             {
                 SintomaWEB sweb = new SintomaWEB();
                 sweb.nome = s.getNome;
@@ -266,7 +269,7 @@ namespace AcupunturaWebService
             }
             List<string> listaDiagnosticos = new List<string>();
 
-            listaDiagnosticos = XmlHandler.getListaDiagnosticosXml(listaSint);
+            listaDiagnosticos = XmlHandler.getListaDiagnosticosXml(listaSint,path);
 
             return listaDiagnosticos;
         }
