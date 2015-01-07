@@ -38,6 +38,7 @@ namespace AcupunturaWebService
             private DateTime dataExpirar;
             private int tempoSessao;
             private UtilizadorWEB utilizador;
+            private TerapeutaWEB terapeuta;
 
             public Token(UtilizadorWEB utilizador) : this(utilizador, DateTime.Now) { }
 
@@ -53,6 +54,7 @@ namespace AcupunturaWebService
             public string Value { get { return value; } }
             public DateTime DataExpirar { get { return dataExpirar; } }
             public UtilizadorWEB Utilizador { get { return utilizador; } }
+            public TerapeutaWEB Terapeuta { get { return terapeuta; } }
             public string Username { get { return utilizador.username; } }
             public Boolean isTimeOutExpired() { return dataExpirar < DateTime.Now; }
 
@@ -119,6 +121,11 @@ namespace AcupunturaWebService
             return tokens[token].Utilizador.isAdmin;
         }
 
+        public int biTerapeuta(string token)
+        {
+            return tokens[token].Terapeuta.bi;
+;
+        }
         public bool isLoggedIn(string token)
         {
             bool res = true;
@@ -285,7 +292,19 @@ namespace AcupunturaWebService
             pweb.dataNascimento = p.data_nascimento;
             return pweb;
         }
-    
+
+        public TerapeutaWEB getTerapeutaID(string token)
+        {
+            checkAuthentication(token, false);
+            TerapeutaWEB tweb = new TerapeutaWEB();
+            Boolean isAdminitrador = isAdmin(token);
+            int bi = biTerapeuta(token);
+            Terapeuta t = dbHandler.getTerapeutaPorBi(bi, isAdminitrador);
+            tweb.bi = t.bi;
+            return tweb;
+
+
+        }
         public TerapeutaWEB getTerapeutaPorBi(string token, int bi)
         {
             checkAuthentication(token, false);

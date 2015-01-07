@@ -147,6 +147,15 @@ namespace AcupunturaWebService
         ResponseFormat = WebMessageFormat.Json,
         UriTemplate = "getAllDiagnosticosXml?token={token}")]
         List<string> getAllDiagnosticosXml(string token);
+        
+        //GET BI DO TERAPEUTA
+
+        [OperationContract]
+        [WebInvoke(Method = "GET",
+        BodyStyle = WebMessageBodyStyle.Wrapped,
+        ResponseFormat = WebMessageFormat.Json,
+        UriTemplate = "getTerapeutaID?token={token}")]
+        TerapeutaWEB getTerapeutaID(string token);
 
         //GET LISTA DIAGNOSTICOS DEPENDENDO DE UMA LISTA DE SINTOMAS
         [OperationContract]
