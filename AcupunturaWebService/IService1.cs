@@ -134,7 +134,6 @@ namespace AcupunturaWebService
         //GET LISTA SINTOMAS
         [OperationContract]
         [WebInvoke(Method = "GET",
-        BodyStyle = WebMessageBodyStyle.Wrapped,
         ResponseFormat = WebMessageFormat.Json,
         UriTemplate = "getListaSintomasXml?token={token}")]
         List<SintomaWEB> getListaSintomasXml(string token);
