@@ -19,7 +19,6 @@ namespace AcupunturaWebService
     {
         DBHandler dbHandler = new DBHandler();
         private Dictionary<string, UtilizadorWEB> utilizadores;
-     //   private Dictionary<string, TerapeutaWEB> terapeutas;
         private Dictionary<string, Token> tokens;
         private static String xmlPath = Path.Combine(HostingEnvironment.ApplicationPhysicalPath, "App_Data", "AcupunturaXml.xml");
         private static String schemaPath = Path.Combine(HostingEnvironment.ApplicationPhysicalPath, "App_Data", "AcupunturaXsd.xsd");
@@ -27,7 +26,6 @@ namespace AcupunturaWebService
         public Service1()
         {
             this.utilizadores = new Dictionary<string, UtilizadorWEB>();
-         //   this.terapeutas = new Dictionary<string, TerapeutaWEB>();
             this.tokens = new Dictionary<string, Token>();
         }
 
@@ -268,20 +266,32 @@ namespace AcupunturaWebService
             Boolean isAdministrador = isAdmin(token);
             return dbHandler.removerTerapeuta(bi, isAdministrador);
         }
+
+        public Boolean removerAdministrador(string token, string username) {
+            checkAuthentication(token, false);
+            Boolean isAdministrador = isAdmin(token);
+            return dbHandler.removerAdministrador(username, isAdministrador);
+        }
         
         public Boolean editarPaciente(string token, int idTerapeuta, string nome, int bi, DateTime dataNascimento)
         {
             checkAuthentication(token, false);
             Boolean isAdministrador = isAdmin(token);
-            return dbHandler.editarPaciente(idTerapeuta, isAdministrador, nome , bi, dataNascimento);
+            return dbHandler.editarPaciente(idTerapeuta, isAdministrador, nome , bi,dataNascimento);
 
         }
         public Boolean editarTerapeuta(string token,string nome, int bi, DateTime dataNascimento, string username, string password) {
             checkAuthentication(token, false);
             Boolean isAdministrador = isAdmin(token);
             return dbHandler.editarTerapeuta(nome, bi, dataNascimento, username, password, isAdministrador);
-
         }
+        public Boolean editarAdministrador(string token, string username, string password)
+        {
+            checkAuthentication(token, false);
+            Boolean isAdministrador = isAdmin(token);
+            return dbHandler.editarAdministrador(username, password, isAdministrador);
+        }
+
         public PacienteWEB getPacientePorBi(string token, int bi, int idTerapeuta)
         {
             checkAuthentication(token, false);
@@ -293,6 +303,17 @@ namespace AcupunturaWebService
             pweb.bi = p.bi;
             pweb.dataNascimento = p.data_nascimento;
             return pweb;
+        }
+
+        public UtilizadorWEB getAdministradorUsername(string token, string username)
+        {
+            checkAuthentication(token, false);
+            UtilizadorWEB pWeb = new UtilizadorWEB();
+            Boolean isAdminitrador = isAdmin(token);
+            Utilizador u = dbHandler.getAdministradorUsername(username, isAdminitrador);
+            pWeb.username = u.username;
+            pWeb.password = u.password;
+            return pWeb;
         }
 
         public TerapeutaWEB getTerapeutaID(string token)

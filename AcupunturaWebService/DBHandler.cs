@@ -49,6 +49,7 @@ namespace AcupunturaWebService
             }
             return t;
         }
+
         public Paciente getPacientePorBi(int bi, Boolean isAdmin, int idTerapeuta )
         {
             Paciente p = new Paciente();
@@ -100,7 +101,24 @@ namespace AcupunturaWebService
 
             return resultado;
         }
+        public Boolean removerAdministrador(string username, Boolean isAdmin)
+        {
+            Boolean resultado;
+            try
+            {
+                Utilizador u = getAdministradorUsername(username, isAdmin);
+                modelo.UtilizadorSet.Remove(u);
+                modelo.SaveChanges();
 
+                resultado = true;
+            }
+            catch
+            {
+                resultado = false;
+            }
+
+            return resultado;
+        }
         public Boolean removerPaciente(int bi, Boolean isAdmin, int idTerapeuta)
         {
             Boolean resultado;
@@ -144,6 +162,8 @@ namespace AcupunturaWebService
 
             return resultado;
         }
+
+     
 
         public Boolean updateDoTerapeutaAoPaciente(int idTerapeuta, Boolean isAdmin)
         {
@@ -226,6 +246,28 @@ namespace AcupunturaWebService
 
             return resultado;
         }
+        public Boolean editarAdministrador(string username, string password, Boolean isAdmin)
+        {
+            Utilizador t = getAdministradorUsername(username, isAdmin);
+            if (isAdmin)
+            {
+                t.username = username;
+                t.password = password;
+            }
+
+            Boolean resultado;
+            try
+            {
+                modelo.SaveChanges();
+                resultado = true;
+            }
+            catch
+            {
+                resultado = false;
+            }
+
+            return resultado;
+        }
 
 
         public Boolean adicionarTerapeuta(string nome, int bi, DateTime dataNascimento, string username, string password, Boolean isAdmin)
@@ -287,6 +329,18 @@ namespace AcupunturaWebService
         public Terapeuta getTerapeutaID(int id) 
         {
             return modelo.TerapeutaSet.Where(i => i.Utilizador.Id == id).First();
+        }
+        public Utilizador getAdministradorUsername(string username, Boolean isAdmin)
+        {
+            Utilizador u = new Utilizador();
+
+            if (isAdmin)
+            {
+                modelo.UtilizadorSet.Where(i => i.username == username).First();
+
+            }
+          
+            return u;
         }
 
     }

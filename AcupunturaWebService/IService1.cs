@@ -87,6 +87,16 @@ namespace AcupunturaWebService
         ResponseFormat = WebMessageFormat.Json,
         UriTemplate = "getPacientePorBi?token={token}&bi={bi}")]
         PacienteWEB getPacientePorBi(string token, int bi, int idTerapeuta);
+     
+        
+        //PESQUISAR ADMINISTRADOR POR USERNAME :
+
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+        BodyStyle = WebMessageBodyStyle.Wrapped,
+        ResponseFormat = WebMessageFormat.Json,
+        UriTemplate = "getAdministradorUsername?token={token}&username={username}")]
+        UtilizadorWEB getAdministradorUsername(string token, string username);
 
         //PESQUISAR TERAPEUTA POR BI :
 
@@ -105,6 +115,15 @@ namespace AcupunturaWebService
         ResponseFormat = WebMessageFormat.Json,
         UriTemplate = "removerPaciente?token={token}&bi={bi}")]
         Boolean removerPaciente(string token, int bi, int idTerapeuta);
+     
+        //REMOVER ADMINISTRADOR
+
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+        BodyStyle = WebMessageBodyStyle.Wrapped,
+        ResponseFormat = WebMessageFormat.Json,
+        UriTemplate = "removerAdministrador?token={token}&username={username}")]
+        Boolean removerAdministrador(string token, string username);
 
         //REMOVER TERAPEUTA
 
@@ -130,6 +149,14 @@ namespace AcupunturaWebService
         ResponseFormat = WebMessageFormat.Json,
         UriTemplate = "editarTerapeuta?token={token}")]
         Boolean editarTerapeuta(string token, string nome, int bi, DateTime dataNascimento, string username, string password);
+
+        //EDITAR ADMINISTRADOR
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+        BodyStyle = WebMessageBodyStyle.Wrapped,
+        ResponseFormat = WebMessageFormat.Json,
+        UriTemplate = "editarAdministrador?token={token}")]
+        Boolean editarAdministrador(string token, string username, string password);
        
         //GET LISTA SINTOMAS
         [OperationContract]
