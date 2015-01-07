@@ -142,7 +142,6 @@ namespace AcupunturaWebService
 
         [OperationContract]
         [WebInvoke(Method = "GET",
-        BodyStyle = WebMessageBodyStyle.Wrapped,
         ResponseFormat = WebMessageFormat.Json,
         UriTemplate = "getAllDiagnosticosXml?token={token}")]
         List<string> getAllDiagnosticosXml(string token);
@@ -151,7 +150,6 @@ namespace AcupunturaWebService
 
         [OperationContract]
         [WebInvoke(Method = "GET",
-        BodyStyle = WebMessageBodyStyle.Wrapped,
         ResponseFormat = WebMessageFormat.Json,
         UriTemplate = "getTerapeutaID?token={token}")]
         TerapeutaWEB getTerapeutaID(string token);
@@ -177,7 +175,6 @@ namespace AcupunturaWebService
 
         [OperationContract]
         [WebInvoke(Method = "GET",
-        BodyStyle = WebMessageBodyStyle.Wrapped,
         ResponseFormat = WebMessageFormat.Json,
         UriTemplate = "validaXml?token={token}")]
         string validaXml(string token);
