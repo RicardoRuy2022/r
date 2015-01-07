@@ -19,6 +19,7 @@ namespace AcupunturaWebService
     {
         DBHandler dbHandler = new DBHandler();
         private Dictionary<string, UtilizadorWEB> utilizadores;
+     //   private Dictionary<string, TerapeutaWEB> terapeutas;
         private Dictionary<string, Token> tokens;
         private static String xmlPath = Path.Combine(HostingEnvironment.ApplicationPhysicalPath, "App_Data", "AcupunturaXml.xml");
         private static String schemaPath = Path.Combine(HostingEnvironment.ApplicationPhysicalPath, "App_Data", "AcupunturaXsd.xsd");
@@ -26,6 +27,7 @@ namespace AcupunturaWebService
         public Service1()
         {
             this.utilizadores = new Dictionary<string, UtilizadorWEB>();
+         //   this.terapeutas = new Dictionary<string, TerapeutaWEB>();
             this.tokens = new Dictionary<string, Token>();
         }
 
