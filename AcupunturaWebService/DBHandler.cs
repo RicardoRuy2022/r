@@ -124,10 +124,12 @@ namespace AcupunturaWebService
             try
             {
                 Terapeuta t = getTerapeutaPorBi(bi, isAdmin);
-                Utilizador u = new Utilizador();
                 updateDoTerapeutaAoPaciente(t.Id, isAdmin);
+                int idUtil = t.Utilizador.Id;
+                Utilizador u = new Utilizador();
                 modelo.TerapeutaSet.Remove(t);
-                u = t.Utilizador;
+                modelo.SaveChanges();
+                u = modelo.UtilizadorSet.Where(i => i.Id == idUtil).First();
                 modelo.UtilizadorSet.Remove(u);
                 modelo.SaveChanges();
                 resultado = true;
@@ -142,24 +144,19 @@ namespace AcupunturaWebService
 
         public Boolean updateDoTerapeutaAoPaciente(int idTerapeuta, Boolean isAdmin)
         {
-            Paciente a = new Paciente();
-            List<Paciente> listaPacientes = modelo.PacienteSet.ToList();
-            if (isAdmin)
-            {
-                foreach (Paciente p in listaPacientes)
-                {
-                    if (p.Terapeuta == getTerapeutaID(idTerapeuta))
-                    {
-                        p.Terapeuta = getTerapeutaID(2);
-                    }
-
-                }
-            }
-            Boolean resultado;
+            Boolean resultado = false;
             try
             {
-                modelo.SaveChanges();
-                resultado = true;
+            if (isAdmin)
+            {
+                List<Paciente> listaPacientes = modelo.PacienteSet.Where(i => i.Terapeuta.Id == idTerapeuta).ToList();
+                foreach (Paciente p in listaPacientes)
+                {
+                    p.Terapeuta = getTerapeutaID(2);
+                    modelo.SaveChanges();
+                }
+              }
+             resultado = true;
             }
             catch
             {
