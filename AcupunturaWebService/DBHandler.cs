@@ -55,7 +55,7 @@ namespace AcupunturaWebService
                 p = modelo.PacienteSet.Where(i => i.bi == bi).First();
 
             }
-            else if (p.Terapeuta.Id == getTerapeutaID(idTerapeuta).Id)
+            else if (p.Terapeuta == getTerapeutaID(idTerapeuta))
             {
                 p = modelo.PacienteSet.Where(i => i.bi == bi).First();
 
@@ -68,25 +68,23 @@ namespace AcupunturaWebService
         public Boolean adicionarPaciente(string nome, int bi, DateTime dataNascimento, int idUtilizador, Boolean isAdmin) {
             Boolean resultado;
             Paciente p = new Paciente();
-         
+
             if (isAdmin)
             {
                 p.nome = nome;
                 p.bi = bi;
                 p.data_nascimento = dataNascimento;
-                p.Terapeuta.Id = 1;
+                //id sem terapeuta corresponde ao id Utilizador = 2
+                p.Terapeuta = getTerapeutaID(2);
             }
-            else if (p.Terapeuta.Id == getTerapeutaID(idUtilizador).Id)
+            else if (!isAdmin)
             {
                 p.nome = nome;
                 p.bi = bi;
                 p.data_nascimento = dataNascimento;
                 p.Terapeuta = getTerapeutaID(idUtilizador);
             }
-            
-            
-            
-            
+
             try { 
             modelo.PacienteSet.Add(p);
             modelo.SaveChanges();
@@ -94,9 +92,7 @@ namespace AcupunturaWebService
             }
             catch 
             {
-                resultado =
-                    
-                    false;
+                resultado = false;
             }
 
             return resultado;
@@ -127,7 +123,12 @@ namespace AcupunturaWebService
             Boolean resultado;
             try
             {
-                modelo.TerapeutaSet.Remove(getTerapeutaPorBi(bi, isAdmin));
+                Terapeuta t = getTerapeutaPorBi(bi, isAdmin);
+                Utilizador u = new Utilizador();
+                updateDoTerapeutaAoPaciente(t.Id, isAdmin);
+                modelo.TerapeutaSet.Remove(t);
+                u = t.Utilizador;
+                modelo.UtilizadorSet.Remove(u);
                 modelo.SaveChanges();
                 resultado = true;
             }
@@ -147,9 +148,9 @@ namespace AcupunturaWebService
             {
                 foreach (Paciente p in listaPacientes)
                 {
-                    if (p.Terapeuta.Id == idTerapeuta)
+                    if (p.Terapeuta == getTerapeutaID(idTerapeuta))
                     {
-                        p.Terapeuta.Id = 1;
+                        p.Terapeuta = getTerapeutaID(2);
                     }
 
                 }
@@ -177,12 +178,15 @@ namespace AcupunturaWebService
                 p.nome = nome;
                 p.bi = bi;
                 p.data_nascimento = dataNascimento;
+                p.Terapeuta = getTerapeutaID(idTerapeuta);
             }
-            else if (p.Terapeuta.Id == getTerapeutaID(idTerapeuta).Id)
+            else if (!isAdmin)
             {
-                p.nome = nome;
-                p.bi = bi;
-                p.data_nascimento = dataNascimento;
+                if(p.Terapeuta == getTerapeutaID(idTerapeuta)){
+                    p.nome = nome;
+                    p.bi = bi;
+                    p.data_nascimento = dataNascimento;
+                }
             }
 
             try

@@ -259,14 +259,7 @@ namespace AcupunturaWebService
             Boolean isAdministrador = isAdmin(token);
             return dbHandler.removerTerapeuta(bi, isAdministrador);
         }
-        public Boolean updateDoTerapeutaAoPaciente(string token, int idTerapeuta)
-        {
-            checkAuthentication(token, false);
-            Boolean isAdministrador = isAdmin(token);
-            return dbHandler.updateDoTerapeutaAoPaciente(idTerapeuta, isAdministrador);
-
-        }
-
+        
         public Boolean editarPaciente(string token, int idTerapeuta, string nome, int bi, DateTime dataNascimento)
         {
             checkAuthentication(token, false);

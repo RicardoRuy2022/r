@@ -114,14 +114,6 @@ namespace AcupunturaWebService
         ResponseFormat = WebMessageFormat.Json,
         UriTemplate = "removerTerapeuta?token={token}&bi={bi}")]
         Boolean removerTerapeuta(string token, int bi);
-
-        //UPDATE TERAPEUTA NO PACIENTE
-        [OperationContract]
-        [WebInvoke(Method = "POST",
-        BodyStyle = WebMessageBodyStyle.Wrapped,
-        ResponseFormat = WebMessageFormat.Json,
-        UriTemplate = "updateDoTerapeutaAoPaciente?token={token}&Id={Id}")]
-        Boolean updateDoTerapeutaAoPaciente(string token, int id);
        
         //EDITAR PACIENTE
         [OperationContract]
