@@ -315,7 +315,7 @@ namespace AcupunturaWebService
             Utilizador u = dbHandler.getUtilizadorIdTerapeura(idTerapeuta);
             uWeb.username = u.username;
             uWeb.password = u.password;
-            return uWeb; 
+            return uWeb;
         }
         public TerapeutaWEB getTerapeutaPorBi(string token, int bi)
         {
