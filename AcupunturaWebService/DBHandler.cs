@@ -36,7 +36,10 @@ namespace AcupunturaWebService
 
             return listaUtilizadores;
         }
-
+        public Utilizador getUtilizadorIdTerapeura(int idTerapeuta)
+        {
+            return modelo.UtilizadorSet.Where(i => i.Terapeuta.Id == idTerapeuta).First();
+        }
         public Terapeuta getTerapeutaPorBi(int bi, Boolean isAdmin) { 
             Terapeuta t = new Terapeuta();
 

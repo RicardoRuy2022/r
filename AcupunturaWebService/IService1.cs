@@ -156,6 +156,15 @@ namespace AcupunturaWebService
         ResponseFormat = WebMessageFormat.Json,
         UriTemplate = "getTerapeutaID?token={token}")]
         TerapeutaWEB getTerapeutaID(string token);
+           
+        //GET ID UTILIZADOR DO TERAPEUTA
+
+        [OperationContract]
+        [WebInvoke(Method = "GET",
+        BodyStyle = WebMessageBodyStyle.Wrapped,
+        ResponseFormat = WebMessageFormat.Json,
+        UriTemplate = "getUtilizadorIdTerapeura?token={token}")]
+        UtilizadorWEB getUtilizadorIdTerapeura(string token, int idTerapeuta);
 
         //GET LISTA DIAGNOSTICOS DEPENDENDO DE UMA LISTA DE SINTOMAS
         [OperationContract]

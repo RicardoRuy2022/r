@@ -307,6 +307,16 @@ namespace AcupunturaWebService
 
 
         }
+
+        public UtilizadorWEB getUtilizadorIdTerapeura(string token, int idTerapeuta)
+        {
+            checkAuthentication(token, false);
+            UtilizadorWEB uWeb = new UtilizadorWEB();
+            Utilizador u = dbHandler.getUtilizadorIdTerapeura(idTerapeuta);
+            uWeb.username = u.username;
+            uWeb.password = u.password;
+            return uWeb; 
+        }
         public TerapeutaWEB getTerapeutaPorBi(string token, int bi)
         {
             checkAuthentication(token, false);
